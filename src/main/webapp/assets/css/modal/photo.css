@@ -1,17 +1,105 @@
-.roommate-photo .modal-dialog { --bs-modal-width: 540px; }
-.roommate-photo .roommate-modal-heading p { color: #7c6f72; font-size: 13px; }
-.roommate-photo-editor { display: flex; gap: 24px; align-items: center; }
-.roommate-photo figure { width: 160px; flex-shrink: 0; }
-.roommate-photo-crop { width: 160px; height: 160px; padding: 10px; border: 1px solid #e7e1df; border-radius: 50%; background: #efebe8; }
-.roommate-photo-crop img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; object-position: center; }
-.roommate-photo figcaption { font-size: 12px; color: #7c6f72; text-align: center; margin-top: 12px; }
-.roommate-photo-controls { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
-.roommate-photo label.roommate-photo-upload { position: relative; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; border: 1px dashed #7a273f; border-radius: 8px; background: #f4e5ea; color: #7a273f; cursor: pointer; font-size: 13px; margin: 0; }
-.roommate-photo-upload:focus-within { outline: 3px solid #7a273f; outline-offset: 3px; }
-.roommate-photo-controls label { font-size: 12px; }
-.roommate-photo-slider { display: flex; align-items: center; gap: 8px; color: #7c6f72; font-size: 12px; }
-.roommate-photo-slider input { width: 100%; min-width: 0; height: 4px; accent-color: #7a273f; cursor: pointer; }
+.roommate-photo .modal-dialog {
+    --bs-modal-width: 540px;
+}
+
+.roommate-photo .roommate-modal-heading p {
+    color: #7c6f72;
+    font-size: 13px;
+}
+
+.roommate-photo-editor {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.roommate-photo figure {
+    width: 160px;
+    flex-shrink: 0;
+}
+
+.roommate-photo-crop {
+    width: 160px;
+    height: 160px;
+    padding: 10px;
+    border: 1px solid #e7e1df;
+    border-radius: 50%;
+    background: #efebe8;
+}
+
+.roommate-photo-crop img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.roommate-photo figcaption {
+    font-size: 12px;
+    color: #7c6f72;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.roommate-photo-controls {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.roommate-photo label.roommate-photo-upload {
+    position: relative;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px;
+    border: 1px dashed #7a273f;
+    border-radius: 8px;
+    background: #f4e5ea;
+    color: #7a273f;
+    cursor: pointer;
+    font-size: 13px;
+    margin: 0;
+}
+
+.roommate-photo-upload:focus-within {
+    outline: 3px solid #7a273f;
+    outline-offset: 3px;
+}
+
+.roommate-photo-controls label {
+    font-size: 12px;
+}
+
+.roommate-photo-slider {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #7c6f72;
+    font-size: 12px;
+}
+
+.roommate-photo-slider input {
+    width: 100%;
+    min-width: 0;
+    height: 4px;
+    accent-color: #7a273f;
+    cursor: pointer;
+}
+
 @media(max-width: 575px) {
-    .roommate-photo-editor { flex-direction: column; }
-    .roommate-photo-controls { width: 100%; }
+    .roommate-photo-editor {
+        flex-direction: column;
+    }
+
+    .roommate-photo-controls {
+        width: 100%;
+    }
+
 }

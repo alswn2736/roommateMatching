@@ -1,30 +1,28 @@
-(() => {
-    'use strict';
-    const root = document.querySelector('.group-main');
-    if (!root) return;
-    const tabs = root.querySelectorAll('[data-group-tab]');
-    tabs.forEach(button => button.addEventListener('click', () => {
+const groupTabs = document.querySelectorAll('[data-group-tab]');
+const groupSections = document.querySelectorAll('[data-group-section]');
+
+groupTabs.forEach(function(button) {
+    button.addEventListener('click', function() {
         const selected = button.dataset.groupTab;
-        tabs.forEach(tab => {
-            const active = tab === button;
-            tab.classList.toggle('active', active);
-            tab.setAttribute('aria-pressed', String(active));
+
+        groupTabs.forEach(function(tab) {
+            tab.classList.toggle('active', tab === button);
+            tab.setAttribute('aria-pressed', String(tab === button));
         });
-        root.querySelectorAll('[data-group-section]').forEach(section => {
+
+        groupSections.forEach(function(section) {
             section.hidden = selected !== 'all' && section.dataset.groupSection !== selected;
         });
-        root.querySelector('.group-left').hidden = selected === 'bills';
-        root.querySelector('.group-grid').classList.toggle('group-filtered', selected !== 'all');
-    }));
-    root.querySelectorAll('[data-group-action]').forEach(button => button.addEventListener('click', () => {
-        const event = new CustomEvent('roommate:group-action', {
-            bubbles: true, cancelable: true,
-            detail: { action: button.dataset.groupAction, groupId: root.querySelector('[data-group-id]').value }
-        });
-        if (button.dispatchEvent(event)) {
-            const status = root.querySelector('[data-group-feedback]');
-            status.textContent = '이 기능은 서버 연결 후 사용할 수 있습니다. 현재 데이터는 변경되지 않았습니다.';
-            status.hidden = false;
-        }
-    }));
-})();
+
+        document.querySelector('.group-left').hidden = selected === 'bills';
+        document.querySelector('.group-grid').classList.toggle('group-filtered', selected !== 'all');
+    });
+});
+
+document.querySelectorAll('.group-edit-button').forEach(function(button) {
+    button.addEventListener('click', function() {
+        const feedback = document.getElementById('group-feedback');
+        feedback.textContent = '아직 준비 중인 기능입니다.';
+        feedback.hidden = false;
+    });
+});

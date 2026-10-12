@@ -1,8 +1,52 @@
-.roommate-leave-warning { display: flex; align-items: center; gap: 8px; padding: 12px; border-radius: 8px; color: #dc2626; background: #fee2e2; font-size: 13px; font-weight: 600; }
-.roommate-leave-warning img { flex-shrink: 0; }
-.roommate-leave .roommate-modal-heading { margin-bottom: -16px; }
-.roommate-leave-group { display: flex; align-items: center; gap: 12px; padding: 16px; background: #efebe8; border-radius: 12px; }
-.roommate-leave-group > span { width: 40px; height: 40px; border-radius: 50%; background: #7a273f; flex-shrink: 0; }
-.roommate-leave-group strong { font-size: 14px; font-weight: 700; }
-.roommate-leave-group p { font-size: 12px; color: #7c6f72; }
-.roommate-leave textarea.form-control { min-height: 100px; padding: 12px; resize: vertical; }
+.roommate-leave-warning {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 8px;
+    color: #dc2626;
+    background: #fee2e2;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.roommate-leave-warning img {
+    flex-shrink: 0;
+}
+
+.roommate-leave .roommate-modal-heading {
+    margin-bottom: -16px;
+}
+
+.roommate-leave-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #efebe8;
+    border-radius: 12px;
+}
+
+.roommate-leave-group > span {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #7a273f;
+    flex-shrink: 0;
+}
+
+.roommate-leave-group strong {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.roommate-leave-group p {
+    font-size: 12px;
+    color: #7c6f72;
+}
+
+.roommate-leave textarea.form-control {
+    min-height: 100px;
+    padding: 12px;
+    resize: vertical;
+}
