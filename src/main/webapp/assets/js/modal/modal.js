@@ -99,10 +99,9 @@
                     return;
                 }
                 data.set('photo', cropped, 'profile.png');
-                data.delete('zoom'); // 이미 중앙 정사각형으로 잘린 파일을 전송합니다.
+                data.delete('zoom');
             }
             let finished = false;
-            // 연결 담당자는 preventDefault() 후 처리 결과를 complete({ message, success })로 전달합니다.
             const complete = ({ message: text, success = false } = {}) => {
                 if (finished || version !== generation) return;
                 finished = true;
@@ -121,7 +120,6 @@
                 complete({ message: '처리 중 오류가 발생했습니다. 다시 시도해주세요.' });
             }
         });
-        // 전송 중 닫기를 막아 중복 요청 및 결과 유실을 방지합니다.
         modal.addEventListener('hide.bs.modal', event => { if (sending) event.preventDefault(); });
         modal.addEventListener('hidden.bs.modal', () => {
             ++generation;

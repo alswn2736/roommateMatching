@@ -50,7 +50,6 @@
 .group-empty-state h1 { font-size: 24px; }
 .group-empty-state p { line-height: 1.7; }
 .group-preview-tools { border-top: 1px dashed #b4a5a9; padding-top: 20px; display: flex; flex-wrap: wrap; gap: 10px; }
-.group-preview-tools p { flex-basis: 100%; font-size: 12px; color: #7c6f72; }
 .group-main [hidden] { display: none !important; }
 .group-grid.group-filtered { grid-template-columns: minmax(0, 1fr); }
 .group-main button:focus-visible { outline: 3px solid #7a273f; outline-offset: 4px; }

@@ -1,5 +1,4 @@
 <%@ page pageEncoding="UTF-8" import="java.util.Map,java.util.List" %>
-<%-- 화면 검토용 데이터. 컨트롤러의 groupView가 있으면 적용하지 않습니다. --%>
 <%
 if ("1".equals(request.getParameter("preview")) && request.getAttribute("groupView") == null) {
     request.setAttribute("groupPreview", true);

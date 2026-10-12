@@ -73,7 +73,7 @@
         </c:when>
         <c:otherwise><section class="group-card group-empty-state"><h1>아직 연결된 그룹이 없습니다.</h1><p>매칭된 그룹 정보가 준비되면 이곳에서 역할, 약속 규칙, 정산 내역을 확인할 수 있습니다.</p></section></c:otherwise>
         </c:choose>
-        <c:if test="${requestScope.groupPreview}"><aside class="group-preview-tools" aria-label="화면 미리보기"><p>미리보기 데이터입니다. 저장 및 탈퇴는 서버 연결 후 사용할 수 있습니다.</p>
+        <c:if test="${requestScope.groupPreview}"><aside class="group-preview-tools" aria-label="화면 미리보기">
             <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#roommate-leave">룸메 탈퇴 요청</button>
             <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#roommate-withdraw">사이트 탈퇴</button>
             <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#roommate-photo">프로필 사진 변경</button>
