@@ -1,0 +1,134 @@
+.roommate-modal {
+    color: #292323;
+    font-family: Inter, "Noto Sans KR", sans-serif;
+}
+
+.roommate-modal .modal-dialog {
+    --bs-modal-width: 480px;
+    max-width: var(--bs-modal-width);
+}
+
+.roommate-modal .modal-content {
+    padding: 36px;
+    border: 0;
+    border-radius: 20px;
+    background: #fff;
+    box-shadow: 0 12px 16px rgba(0,0,0,.09);
+}
+
+.roommate-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.roommate-modal h2, .roommate-modal p, .roommate-modal figure {
+    margin: 0;
+}
+
+.roommate-modal h2 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.roommate-modal-heading p {
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.roommate-modal label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.roommate-modal .form-control {
+    border: 1px solid #e7e1df;
+    border-radius: 8px;
+    min-height: 46px;
+    padding: 12px 16px;
+    font-size: 14px;
+}
+
+.roommate-modal .form-control::placeholder {
+    color: #7c6f72;
+}
+
+.roommate-modal .form-control:focus {
+    border-color: #7a273f;
+    box-shadow: 0 0 0 3px #7a273f20;
+}
+
+.roommate-modal-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.roommate-modal-actions .btn {
+    flex: 1;
+    min-height: 46px;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.roommate-modal-cancel {
+    color: #7c6f72;
+    border: 1px solid #e7e1df;
+    background: white;
+}
+
+.roommate-modal-submit {
+    --bs-btn-bg: #7a273f;
+    --bs-btn-color: white;
+    --bs-btn-hover-bg: #642034;
+    --bs-btn-hover-color: white;
+    --bs-btn-disabled-bg: #7a273f;
+    --bs-btn-disabled-color: white;
+}
+
+.roommate-modal-danger {
+    --bs-btn-bg: #dc2626;
+    --bs-btn-hover-bg: #b91c1c;
+    --bs-btn-disabled-bg: #dc2626;
+}
+
+.roommate-modal-feedback {
+    color: #7a273f;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.roommate-modal [hidden] {
+    display: none !important;
+}
+
+.roommate-modal button:focus-visible {
+    outline: 3px solid #7a273f;
+    outline-offset: 3px;
+}
+
+@media(max-width: 575px) {
+    .roommate-modal .modal-dialog {
+        margin: 16px auto;
+        width: calc(100% - 32px);
+        min-height: calc(100% - 32px);
+    }
+
+    .roommate-modal .modal-content {
+        padding: 24px;
+    }
+
+    .roommate-modal-form {
+        gap: 24px;
+    }
+
+    .roommate-modal h2 {
+        font-size: 22px;
+    }
+
+}
