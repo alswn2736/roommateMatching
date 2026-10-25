@@ -60,42 +60,6 @@
                                 <span class="switchTrack"></span>
                             </label>
                         </div>
-                        <div>
-                            <div class="infoRow">
-                                <span class="infoLabel">흡연 여부</span>
-                                <span class="infoValue">비흡연자</span>
-                            </div>
-                            <label class="statusSwitch">
-                                <input type="checkbox" name="smokingPublic" value="Y">
-                                <span class="statusText on">공개됨</span>
-                                <span class="statusText off">비공개</span>
-                                <span class="switchTrack"></span>
-                            </label>
-                        </div>
-                        <div>
-                            <div class="infoRow">
-                                <span class="infoLabel">생활 패턴</span>
-                                <span class="infoValue">종달새형(아침형)</span>
-                            </div>
-                            <label class="statusSwitch">
-                                <input type="checkbox" name="dailyPublic" value="Y">
-                                <span class="statusText on">공개됨</span>
-                                <span class="statusText off">비공개</span>
-                                <span class="switchTrack"></span>
-                            </label>
-                        </div>
-                        <div>
-                            <div class="infoRow">
-                                <span class="infoLabel">생활 소음</span>
-                                <span class="infoValue">소음 적음</span>
-                            </div>
-                            <label class="statusSwitch">
-                                <input type="checkbox" name="noisePublic" value="Y">
-                                <span class="statusText on">공개됨</span>
-                                <span class="statusText off">비공개</span>
-                                <span class="switchTrack"></span>
-                            </label>
-                        </div>
                     </div>
                     <div class="btnContent">
                         <button type="button" class="modify">

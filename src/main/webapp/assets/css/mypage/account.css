@@ -1,0 +1,272 @@
+body {
+    display: flex;
+    width: 100%;
+    min-height: 1024px;
+    flex-direction: column;
+    align-items: stretch;
+    background: #EFEBE8;
+}
+
+.mainLayout {
+    display: flex;
+    padding: 40px 80px;
+    align-items: flex-start;
+    gap: 32px;
+    align-self: stretch;
+}
+
+.contentArea {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    flex: 1 0 0;
+}
+
+.sectionTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.title {
+    color: #241B1D;
+    font-family: Newsreader;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.accountCard {
+    display: flex;
+    padding: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.accountCard > span {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.formInputs {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.fieldRow {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.fieldRow > span {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.studentMail {
+    display: flex;
+    height: 46px;
+    padding: 0 16px;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 8px;
+    border: 1px solid #E7E1DF;
+    background: #F5F2F0;
+}
+
+.studentMail::placeholder {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.passwordInputs {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.newPassword {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    flex: 1 0 0;
+}
+
+.newPassword > span {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.newPwInput {
+    display: flex;
+    height: 46px;
+    padding: 0 16px;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 8px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.saveRow {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.btnSavePassword {
+    display: flex;
+    padding: 12px 24px;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: #7A273F;
+}
+
+.btnSavePassword > span {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.logoutCard {
+    display: flex;
+    padding: 28px;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.infoText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+}
+
+.infoText > span {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.btnLogout {
+    display: flex;
+    padding: 10px 18px;
+    align-items: flex-start;
+    border-radius: 8px;
+    border: 1px solid #E7E1DF;
+}
+
+.btnLogout > span {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.deleteZoneCard {
+    display: flex;
+    padding: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #DC2626;
+    background: #FFF;
+}
+
+.deleteHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.deleteHeader > span {
+    color: #DC2626;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.deleteDescription {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    align-self: stretch;
+}
+
+.descriptionTitle {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.description {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.deleteActionRow {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.btnDelete {
+    display: flex;
+    padding: 12px 24px;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: #DC2626;
+}
+
+.btnDelete > span {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+}
