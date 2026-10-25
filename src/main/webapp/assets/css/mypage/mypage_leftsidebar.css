@@ -1,0 +1,106 @@
+a {
+    text-decoration: none;
+}
+
+.mypageLeftsidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    width: 100%;
+    max-width: 260px;
+    flex-shrink: 1;
+    min-width: 0;
+}
+
+.minProfile {
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.minProfileImg {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    border: 1px solid #E7E1DF;
+}
+
+.nameMajor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.minProfileName {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.minProfileClass {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.menuContainer {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.menuItem {
+    display: flex;
+    padding: 10px 16px;
+    align-items: flex-start;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #FFF;
+}
+
+.menuItem.active {
+    display: flex;
+    padding: 10px 16px;
+    align-items: flex-start;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #F4E5EA;
+}
+
+.menuItem a {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.menuItem.active a {
+    color: #7A273F;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
