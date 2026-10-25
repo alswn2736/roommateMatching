@@ -1,0 +1,440 @@
+body {
+    display: flex;
+    width: 100%;
+    min-height: 1024px;
+    flex-direction: column;
+    align-items: stretch;
+    background: #EFEBE8;
+}
+
+.mainLayout {
+    display: flex;
+    padding: 40px 80px;
+    align-items: flex-start;
+    gap: 32px;
+    align-self: stretch;
+}
+
+.contentArea {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    flex: 1 0 0;
+}
+
+.sectionTitle {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    align-self: stretch;
+}
+
+.title {
+    color: #241B1D;
+    font-family: "Noto Sans KR";
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.recruitingCard {
+    display: flex;
+    padding: 28px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.headerLeft {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.headerBadges {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.roomBadge {
+    display: flex;
+    padding: 4px 10px;
+    align-items: flex-start;
+    border-radius: 4px;
+    background: #F4E5EA;
+}
+
+.roomBadgeText {
+    color: #7A273F;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.recruitingBadge {
+    display: flex;
+    padding: 4px 10px;
+    align-items: flex-start;
+    border-radius: 4px;
+    background: #DEF7EC
+}
+
+.recruitingBadgeText {
+    color: #03543F;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.headerTitle {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.arrowToggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.arrowToggleText {
+    color: #7A273F;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.arrowToggleChevron {
+    transition: transform 0.2s;
+    transform: rotate(-90deg);
+}
+
+.recruitingCard[open] .arrowToggleChevron {
+    transform: rotate(0deg);
+}
+
+.recruitingCard[open] .cardHeader {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #E7E1DF;
+}
+
+.applicantCardSelected {
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+    border-radius: 12px;
+    border: 1px solid #7A273F;
+    background: #FFF;
+    }
+
+.applicantList {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    align-self: stretch;
+}
+
+.applicantInfo {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    align-self: stretch;   
+}
+
+.profileImg {
+    width: 56px;
+    height: 64px;
+    border-radius: 8px;
+}
+
+.textDetails {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    flex: 1 0 0;
+}
+
+.nameHeader {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.name {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.bio {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.greeting {
+    color: #000;
+    font-family: Inter;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.actionButtons {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.btnChat {
+    display: flex;
+    padding: 8px 14px;
+    align-items: center;
+    gap: 6px;
+    border-radius: 8px;
+    background: #F5F2F0;
+}
+
+.messageSquare {
+    width: 16px;
+    height: 16px;
+}
+
+.btnChat > span {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btnDecline {
+    display: flex;
+    padding: 8px 14px;
+    align-items: flex-start;
+    border-radius: 8px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.btnDecline > span {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btnAccept {
+    display: flex;
+    padding: 8px 14px;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: #7A273F;
+}
+
+.btnAccept > span {
+color: #FFF;
+font-family: Inter;
+font-size: 13px;
+font-weight: 600;
+}
+
+.chatSection {
+    display: flex;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: 8px;
+    background: #F5F2F0;
+}
+
+.chatSection > span {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.chatHistory {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.received {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.receivedBubble {
+    display: flex;
+    padding: 8px 12px;
+    align-items: flex-start;
+    border-radius: 12px 12px 12px 2px;
+    background: #FFF;
+}
+
+.receivedBubble > span {
+    color: #241B1D;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.chatTime {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 10px;
+    font-weight: 400;
+}
+
+.sent {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.sentBubble {
+    display: flex;
+    padding: 8px 12px;
+    align-items: flex-start;
+    border-radius: 12px 12px 2px 12px;
+    background: #7A273F;
+}
+
+.sentBubble > span {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.chatInputRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.inputWrapper {
+    display: flex;
+    height: 38px;
+    padding: 0 12px;
+    align-items: center;
+    flex: 1 0 0;
+    border-radius: 8px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.inputWrapper::placeholder {
+    flex: 1 0 0;
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.btnSend {
+    display: flex;
+    padding: 8px 16px;
+    align-items: flex-start;
+    border-radius: 8px;
+    background: #7A273F;
+}
+
+.btnSend > span {
+    color: #FFF;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.applicantCardNone {
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    gap: 20px;
+    align-self: stretch;
+    border-radius: 12px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.recruitedCard {
+    display: flex;
+    padding: 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+}
+
+.recruitedBadge {
+    display: flex;
+    padding: 4px 10px;
+    align-items: flex-start;
+    border-radius: 4px;
+    background: #E5E7EB;
+}
+
+.recruitedBadgeText {
+    color: #1F2937;
+    font-family: Inter;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.recruitedheaderTitle {
+    color: #7C6F72;
+font-family: Inter;
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+
+.arrowTogglerRecruitedText {
+    color: #7C6F72;
+    font-family: Inter;
+    font-size: 13px;
+    font-weight: 400;
+}
