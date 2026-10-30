@@ -1,0 +1,191 @@
+@charset "UTF-8";
+
+.applyModal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
+    width: 470px;
+    max-width: 100%;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 36px;
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.09);
+}
+
+.applyHeading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.applyHeading h2 {
+    margin: 0;
+    color: #241B1D;
+    font-family: Inter, sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.applyNotice {
+    align-self: stretch;
+    margin: 0;
+    color: #7C6F72;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 350;
+    line-height: 140%;
+    white-space: nowrap;
+}
+
+.publicInfoBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    align-self: stretch;
+    box-sizing: border-box;
+    padding: 18px;
+    border-radius: 12px;
+    background: #F4E5EA;
+}
+
+.publicInfoBox h3 {
+    margin: 0;
+
+    color: #7A273F;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.publicInfoRows {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.publicInfoRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.publicInfoRow span {
+    color: #7C6F72;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.publicInfoRow strong {
+    color: #241B1D;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.applyMessageField {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+}
+
+.applyMessageField label {
+    color: #241B1D;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.applyMessageBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    align-self: stretch;
+    height: 140px;
+    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #E7E1DF;
+}
+
+.applyMessageBox:focus-within {
+    border-color: #7A273F;
+}
+
+.applyMessageBox textarea {
+    flex: 1 0 0;
+    width: 100%;
+    min-height: 0;
+    align-self: stretch;
+    padding: 0;
+    border: 0;
+    outline: none;
+    resize: none;
+    color: #7C6F72;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    background: transparent;
+}
+
+.applyMessageBox textarea::placeholder {
+    color: #7C6F72;
+}
+
+.characterCount {
+    align-self: stretch;
+    color: #7C6F72;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: right;
+}
+
+.applyActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.applyActions button {
+    display: flex;
+    flex: 1 0 0;
+    height: 46px;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    border-radius: 8px;
+    font-family: Inter, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.applyCancelButton {
+    border: 1px solid #E7E1DF;
+    background: #FFFFFF;
+    color: #7C6F72;
+}
+
+.applySubmitButton {
+    border: 1px solid #7A273F;
+    background: #7A273F;
+    color: #FFFFFF;
+}
+
+.applySubmitButton:hover {
+    background: #682036;
+}
