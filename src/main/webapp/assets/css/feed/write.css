@@ -1,0 +1,229 @@
+@charset "UTF-8";
+
+.modalOverlay[hidden] {
+    display: none !important;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 16px;
+    background: rgba(39, 29, 32, 0.45);
+}
+
+.writeModal {
+    width: 680px;
+    max-width: 100%;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    scrollbar-width: none;
+
+    padding: 28px 40px;
+
+    border-radius: 24px;
+    background: #FFFFFF;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+.writeModalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.writeModalHeader h2 {
+    margin: 0;
+    color: #241B1D;
+    font-family: 'Inter', sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.modalCloseButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.modalCloseButton svg {
+    display: block;
+    width: 16.668px;
+    height: 16.668px;
+}
+
+#writeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.writeField > label,
+.writeLabel {
+    display: block;
+    margin-bottom: 6px;
+    color: #241B1D;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.writeField input[type="text"],
+.writeField textarea {
+    width: 100%;
+    border: 1px solid #E8E0DE;
+    border-radius: 9px;
+    background: #FFFFFF;
+    color: #241B1D;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    outline: none;
+}
+
+.writeField input[type="text"] {
+    height: 42px;
+    padding: 0 15px;
+}
+
+.writeField textarea {
+    height: 110px;
+    min-height: 110px;
+    padding: 14px 15px;
+    resize: none;
+    line-height: 1.7;
+}
+
+.writeField input:focus,
+.writeField textarea:focus {
+    border-color: #7A273F;
+}
+
+.writeField input::placeholder,
+.writeField textarea::placeholder {
+    color: #918583;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: normal;
+    opacity: 1;
+}
+
+.roomTypeOptions {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.roomTypeOption {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 36px;
+    padding: 7px 5px;
+    border: 1px solid #E8E0DE;
+    border-radius: 9px;
+    color: #776C6C;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+    cursor: pointer;
+}
+
+.roomTypeOption input,
+.habitTag input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
+
+.roomTypeOption.selected,
+.roomTypeOption:has(input:checked) {
+    border-color: #7A273F;
+    background: #7A273F;
+    color: #FFFFFF;
+}
+
+.habitTags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.habitTag {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    min-height: 30px;
+    padding: 5px 10px;
+    border: 1px solid #E8E0DE;
+    border-radius: 20px;
+    background: #F5F2F1;
+    color: #817575;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.habitTag.selected,
+.habitTag:has(input:checked) {
+    border-color: #A33D59;
+    background: #F5E7EB;
+    color: #8A2C47;
+    font-weight: 600;
+}
+
+.habitTag.selected span,
+.habitTag:has(input:checked) span {
+    font-weight: 600;
+}
+
+.writeModalActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.writeCancelButton,
+.writeSubmitButton {
+    min-height: 42px;
+    padding: 0 24px;
+    border-radius: 9px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: normal;
+    cursor: pointer;
+}
+
+.writeCancelButton {
+    border: 1px solid #E8E0DE;
+    background: #FFFFFF;
+    color: #786C6C;
+}
+
+.writeSubmitButton {
+    border: 1px solid #7A273F;
+    background: #7A273F;
+    color: #FFFFFF;
+}
