@@ -71,8 +71,8 @@
             새 학기를 함께할 조용하고 깔끔한 룸메이트를 찾고 있습니다. 아침형 생활 패턴을 가지신 분과 좋은 메이트가 되고 싶어요! 시험 기간에도 서로 조용하며 배려할 줄 아는 분이면 좋겠습니다. 편하게 연락주세요!
         </p>
         
-        <button type="button" class="detailApplyButton" id="openApplyModal">
-        	신청하기
-        </button>
+        <button type="button" class="btn detailApplyButton" id="openApplyModal">
+		    신청하기
+		</button>
     </section>
 </div>
