@@ -180,12 +180,22 @@
     color: #7C6F72;
 }
 
+.applyCancelButton:hover,
+.applyCancelButton:focus {
+    background: #F4E5EA;
+    border-color: #D8C4CA;
+    color: #7C6F72;
+}
+
 .applySubmitButton {
     border: 1px solid #7A273F;
     background: #7A273F;
     color: #FFFFFF;
 }
 
-.applySubmitButton:hover {
-    background: #682036;
+.applySubmitButton:hover,
+.applySubmitButton:focus {
+    background: #5E1D30;
+    border-color: #5E1D30;
+    color: #FFFFFF;
 }
