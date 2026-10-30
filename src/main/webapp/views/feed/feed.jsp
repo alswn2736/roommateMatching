@@ -10,7 +10,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Newsreader:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-
+	
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/common/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/feed/feed.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/feed/write.css">
@@ -32,7 +34,8 @@
 		            </svg>
 		
 		            <input type="text" id="keywordSearch"
-		                   placeholder="키워드를 입력하세요">
+			           class="form-control"
+			           placeholder="키워드를 입력하세요">
 		        </div>
 		    </div>
 		
@@ -42,14 +45,14 @@
 		        <p class="filterHeading">흡연 여부</p>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="smoking"
-		                   value="비흡연" checked>
+			        <input type="checkbox" class="form-check-input"
+	           			name="smoking" value="비흡연" checked>
 		            <span>비흡연자 선호</span>
 		        </label>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="smoking"
-		                   value="흡연가능">
+		            <input type="checkbox" class="form-check-input"
+	           			name="smoking" value="흡연가능">
 		            <span>흡연 가능자 선호</span>
 		        </label>
 		    </div>
@@ -60,20 +63,20 @@
 		        <p class="filterHeading">생활 패턴</p>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="habit"
-		                   value="아침형" checked>
+					<input type="checkbox" class="form-check-input"
+	           			name="habit" value="아침형" checked>
 		            <span>아침형 인간 (얼리버드)</span>
 		        </label>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="habit"
-		                   value="저녁형">
+					<input type="checkbox" class="form-check-input"
+	           			name="habit" value="저녁형">
 		            <span>저녁형 인간 (올빼미)</span>
 		        </label>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="habit"
-		                   value="청결">
+					<input type="checkbox" class="form-check-input"
+	           			name="habit" value="상관없음">
 		            <span>상관 없음</span>
 		        </label>
 		    </div>
@@ -84,26 +87,26 @@
 		        <p class="filterHeading">성격 / 성향</p>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="habit"
-		                   value="조용한 편" checked>
+					<input type="checkbox" class="form-check-input"
+	           			name="personality" value="조용한편" checked>
 		            <span>조용한 편</span>
 		        </label>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="habit"
-		                   value="활발하고 외향적">
+		            <input type="checkbox" class="form-check-input"
+	           			name="personality" value="활발하고 외향적">
 		            <span>활발하고 외향적</span>
 		        </label>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="habit"
-		                   value="개인 생활 존중">
+		        	<input type="checkbox" class="form-check-input"
+	           			name="personality" value="개인 생활 존중">
 		            <span>개인 생활 존중</span>
 		        </label>
 		
 		        <label class="filterOption">
-		            <input type="checkbox" name="habit"
-		                   value="사교적인 메이트">
+					<input type="checkbox" class="form-check-input"
+	           			name="personality" value="사교적인 메이트">
 		            <span>사교적인 메이트</span>
 		        </label>
 		    </div>
@@ -124,14 +127,15 @@
 
                 <div class="toolbarActions">
 
-                    <select id="sortPosts" aria-label="모집글 정렬">
-                        <option value="latest">최신순</option>
-                        <option value="oldest">오래된순</option>
-                    </select>
+                    <select id="sortPosts" class="form-select" aria-label="모집글 정렬">
+					    <option value="latest">최신순</option>
+					    <option value="oldest">오래된순</option>
+					</select>
 
-                    <button type="button" id="openWriteModal" class="writeButton">
-                        방 찾기 글쓰기
-                    </button>
+                    <button type="button" id="openWriteModal"
+					        class="btn writeButton">
+					    방 찾기 글쓰기
+					</button>
 
                 </div>
             </div>
