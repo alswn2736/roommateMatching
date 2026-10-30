@@ -36,9 +36,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 	
 	overlay.addEventListener("click", function (event) {
-		if (event.target === overlay) {
-			closeDetail();
-		}
+	    if (event.target === overlay) {
+	        closeModal();
+	    }
 	});
 	
     overlay.querySelectorAll(".roomTypeOption input").forEach(function (input) {

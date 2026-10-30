@@ -18,7 +18,8 @@
             
             <div class="writeField">
                 <label for="recruitTitle">모집글 제목</label>
-                <input type="text" id="recruitTitle" name="title" maxlength="100" placeholder="새 학기 기숙사 같이 쓸 동갑내기 구해요 (학과, 성향 요약)" required>
+                <input type="text" id="recruitTitle" name="title" class="form-control"
+                	maxlength="100" placeholder="새 학기 기숙사 같이 쓸 동갑내기 구해요 (학과, 성향 요약)" required>
             </div>
             
             <div class="writeField">
@@ -101,25 +102,26 @@
                 <label for="recruitDescription">
                     상세 모집 설명 및 요청사항
                 </label>
-
+                
                 <textarea id="recruitDescription" name="description"
-                          rows="5"
-                          maxlength="1000"
-                          placeholder="메이트를 찾는 다른 학우들에게 내 생활 습관과 수면 패턴, 원하는 상대의 취향에 대해 자세히 작성해 주세요.
-
+			          class="form-control"
+			          rows="5"
+			          maxlength="1000"
+			          placeholder="메이트를 찾는 다른 학우들에게 내 생활 습관과 수면 패턴, 원하는 상대의 취향에 대해 자세히 작성해 주세요.
+			
 예: 잠귀가 어두우신 분이 편해요, 주말에는 거의 고향 내려갑니다!"
-                          required></textarea>
+			          required></textarea>
             </div>
             
             <div class="writeModalActions">
-                <button type="button" id="cancelWriteModal" class="writeCancelButton">
-                    취소
-                </button>
-
-                <button type="submit" class="writeSubmitButton">
-                    모집글 등록하기
-                </button>
-            </div>
+			    <button type="button" id="cancelWriteModal" class="btn writeCancelButton">
+			        취소
+			    </button>
+			
+			    <button type="submit" class="btn writeSubmitButton">
+			        모집글 등록하기
+			    </button>
+			</div>
 
         </form>
     </section>

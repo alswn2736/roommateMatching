@@ -22,9 +22,7 @@
     max-height: calc(100vh - 32px);
     overflow-y: auto;
     scrollbar-width: none;
-
     padding: 28px 40px;
-
     border-radius: 24px;
     background: #FFFFFF;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
@@ -41,7 +39,7 @@
     margin: 0;
     color: #241B1D;
     font-family: 'Inter', sans-serif;
-    font-size: 24px;
+    font-size: 25px;
     font-weight: 600;
     line-height: normal;
 }
@@ -111,6 +109,7 @@
 .writeField input:focus,
 .writeField textarea:focus {
     border-color: #7A273F;
+    box-shadow: 0 0 0 0.15rem rgba(122, 39, 63, 0.15);
 }
 
 .writeField input::placeholder,
@@ -212,7 +211,6 @@
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     font-weight: 600;
-    line-height: normal;
     cursor: pointer;
 }
 
@@ -222,8 +220,21 @@
     color: #786C6C;
 }
 
+.writeCancelButton:hover,
+.writeCancelButton:focus {
+    background: #F4E5EA;
+    border-color: #D8C4CA;
+    color: #7C6F72;
+}
+
 .writeSubmitButton {
     border: 1px solid #7A273F;
     background: #7A273F;
+    color: #FFFFFF;
+}
+
+.writeSubmitButton:hover,
+.writeSubmitButton:focus {
+    background: #5E1D30;
     color: #FFFFFF;
 }
