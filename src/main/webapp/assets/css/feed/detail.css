@@ -1,0 +1,241 @@
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 24px;
+    background: rgba(36, 27, 29, 0.5);
+}
+
+.modalOverlay[hidden] {
+    display: none !important;
+}
+
+.detailModal {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 25px;
+    width: 680px;
+    max-width: 100%;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 40px;
+    border-radius: 24px;
+    background: #FFFFFF;
+    box-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.09);
+}
+
+.detailHeading {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.detailTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.roomBadge {
+    color: #7A273F;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.detailCloseButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 18px;
+    height: 18px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.detailCloseButton svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+}
+
+.detailModal h2 {
+    align-self: stretch;
+    margin: 0;
+    color: #241B1D;
+    font-family: Inter, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.detailAuthor {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    align-self: stretch;
+}
+
+.detailAvatar {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    overflow: hidden;
+    border-radius: 50%;
+    background: #F0E6E2;
+    color: #7A273F;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.detailAvatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.detailAvatar span {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.detailAvatar img[hidden],
+.detailAvatar span[hidden] {
+    display: none;
+}
+
+.detailAuthor > div:last-child {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.detailAuthor strong {
+    color: #241B1D;
+    font-family: Inter, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.detailAuthor p {
+    margin: 0;
+    color: #7C6F72;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.detailModal hr {
+    width: 100%;
+    height: 1px;
+    flex-shrink: 0;
+    margin: 0;
+    border: 0;
+    background: #E7E1DF;
+}
+
+.detailFacts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px 24px;
+    width: 100%;
+}
+
+.detailFact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    border-radius: 12px;
+    background: #EFEBE8;
+}
+
+.detailFact span {
+    color: #7C6F72;
+    font-family: Inter, sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.detailFact strong {
+    color: #241B1D;
+    font-family: Inter, sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.detailTags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 4px 8px;
+
+    width: 100%;
+    margin-top: -12px;
+    margin-bottom: -12px;
+}
+
+.detailTags span {
+    display: flex;
+    align-items: flex-start;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #F4E5EA;
+    color: #7A273F;
+    font-family: Inter, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.detailDescription {
+    align-self: stretch;
+    margin: 0;
+    color: #241B1D;
+    font-family: Inter, sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 160%;
+    white-space: pre-line;
+}
+
+.detailApplyButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    width: 100%;
+    height: 52px;
+    flex-shrink: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 12px;
+    background: #7A273F;
+    color: #FFFFFF;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.detailApplyButton:hover {
+    background: #682036;
+}
