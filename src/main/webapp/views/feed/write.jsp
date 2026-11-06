@@ -39,12 +39,6 @@
                         <span>기숙사 4인실</span>
                     </label>
 
-                    <label class="roomTypeOption">
-                        <input type="radio" name="roomType"
-                               value="학교 주변 자취 / 쉐하">
-                        <span>학교 주변 자취 / 쉐하</span>
-                    </label>
-
                 </div>
             </div>
 
