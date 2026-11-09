@@ -21,52 +21,32 @@
                         <span class="infoWarningTextSubtitle">토글 스위치를 활성화하면 다른 학생들이 해당 정보를 볼 수 있습니다.</span>
                     </div>
                 </div>
-                <form action="${pageContext.request.contextPath}/views/mypage/update.jsp" method="post" class="profileSetting">
-                    <span class="profileSettingTitle">내 기본 정보 및 공개 범위</span>
-                    <div class="profileSettingLayout">
-                        <div>
-                            <div class="infoRow">
-                                <span class="infoLabel">이름</span>
-                                <span class="infoValue">김솜솜</span>
+                <div class="profileSetting">
+                    <form>
+                        <div class="updateProfileImg">
+                            <div class="updateProfileHeader">
+                                <div class="updateProfileHeaderTitle">
+                                    <span class="profileTitle">프로필 사진 변경</span>
+                                    <span class="profileSubtitle">JPG, PNG 형식의 5MB 이하 파일만 업로드할 수 있습니다.</span>
+                                </div>
+                                <button class="saveProfileImgBtn">
+                                    <span>사진 저장</span>
+                                </button>
                             </div>
-                            <label class="statusSwitch">
-                                <input type="checkbox" name="namePublic" value="Y" checked>
-                                <span class="statusText on">공개됨</span>
-                                <span class="statusText off">비공개</span>
-                                <span class="switchTrack"></span>
-                            </label>
-                        </div>
-                        <div>
-                            <div class="infoRow">
-                                <span class="infoLabel">학번</span>
-                                <span class="infoValue">23학번</span>
+                            <div class="updateProfileImgContent">
+                                <div class="proviewArea">
+                                    <div class="preview">
+                                        <div class="ProfileImg" style="background-image: url('${pageContext.request.contextPath}/assets/image/mypage/profile.jpg');"></div>
+                                    </div>
+                                    <span>적용될 이미지 비율</span>
+                                </div>
+                                <div class="editProfileArea">
+                                    <input type="file" class="newImageUpload">
+                                </div>
                             </div>
-                            <label class="statusSwitch">
-                                <input type="checkbox" name="studentIdPublic" value="Y">
-                                <span class="statusText on">공개됨</span>
-                                <span class="statusText off">비공개</span>
-                                <span class="switchTrack"></span>
-                            </label>
                         </div>
-                        <div>
-                            <div class="infoRow">
-                                <span class="infoLabel">학과</span>
-                                <span class="infoValue">컴퓨터공학과</span>
-                            </div>
-                            <label class="statusSwitch">
-                                <input type="checkbox" name="deptPublic" value="Y">
-                                <span class="statusText on">공개됨</span>
-                                <span class="statusText off">비공개</span>
-                                <span class="switchTrack"></span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="btnContent">
-                        <button type="button" class="modify">
-                            <span>수정하기</span>
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </body>
