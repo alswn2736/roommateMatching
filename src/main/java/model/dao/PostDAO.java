@@ -12,7 +12,7 @@ import model.dto.PostDTO;
 public class PostDAO {
     
     private static final String COLS = "postid, writerid, title, capacity, acceptedcount, " +
-            "kWsmoking, kwsleeptime, kwsensivity, kwaircon, kwclean, " +
+            "kWsmoking, kwsleeptime, kwsensitivity, kwaircon, kwclean, " +
             "status, content, createat";
     
     // 새 모집글 번호 (현재 최대값 + 1)
