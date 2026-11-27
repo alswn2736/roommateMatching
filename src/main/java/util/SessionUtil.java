@@ -2,19 +2,20 @@ package util;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import model.domain.User;
 import model.dto.UserDTO;
 
 /**
  * 로그인 세션 관련 공통 처리.
  *
- * 로그인 성공 시 (auth 쪽 로그인 처리에서) 아래 둘 중 하나로 세션에 저장하면 된다.
- *   session.setAttribute(SessionUtil.LOGIN_USER, userDTO);        // UserDTO 통째로
- *   session.setAttribute(SessionUtil.LOGIN_USER, user.getStudentId()); // 학번만
- * 마이페이지는 어느 방식이든 학번만 꺼내서 DB 에서 최신 정보를 다시 조회한다.
+ * auth 의 LoginServlet 이 로그인 성공 시
+ *   session.setAttribute("loginMember", user);   // model.domain.User
+ * 로 저장한다. 마이페이지는 여기서 학번만 꺼내서 DB 에서 최신 정보를 다시 조회한다.
  */
 public class SessionUtil {
 
-    public static final String LOGIN_USER = "loginUser";
+    /** auth(LoginServlet)와 같은 세션 키 */
+    public static final String LOGIN_USER = "loginMember";
 
     private SessionUtil() {}
 
@@ -26,21 +27,21 @@ public class SessionUtil {
         }
         Object value = session.getAttribute(LOGIN_USER);
 
-        if (value instanceof UserDTO) {
-            int id = ((UserDTO) value).getStudentId();
-            return id == 0 ? null : id;
-        }
-        if (value instanceof Number) {
-            return ((Number) value).intValue();
-        }
-        if (value instanceof String) {
+        int id = 0;
+        if (value instanceof User) {
+            id = ((User) value).getStudentId();
+        } else if (value instanceof UserDTO) {
+            id = ((UserDTO) value).getStudentId();
+        } else if (value instanceof Number) {
+            id = ((Number) value).intValue();
+        } else if (value instanceof String) {
             try {
-                return Integer.parseInt(((String) value).trim());
+                id = Integer.parseInt(((String) value).trim());
             } catch (NumberFormatException e) {
                 return null;
             }
         }
-        return null;
+        return id > 0 ? id : null;
     }
 
     public static boolean isLogin(HttpServletRequest request) {

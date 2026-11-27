@@ -1,11 +1,11 @@
 package controller.mypage;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.UUID;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,11 +14,12 @@ import model.service.MyPageException;
 
 /**
  * POST /mypage/profile/image (multipart, 파일 파라미터명 profileImg)
- * JPG/PNG, 5MB 이하만 허용. 파일은 /assets/image/mypage/upload/ 에 저장하고 DB 에는 경로만 저장.
+ * JPG/PNG, 5MB 이하만 허용. 파일은 {사용자 홈}/roommate-uploads/profile/ 에 저장하고
+ * DB 에는 "/app/profile-image?file=UUID.jpg" 형식의 주소만 저장 (auth 최초 프로필 설정과 동일).
  */
 public class ProfileImgCommand extends MyPageCommand {
 
-    static final String UPLOAD_PATH = "/assets/image/mypage/upload";
+    static final String IMAGE_URL = "/app/profile-image?file=";
     private static final long MAX_SIZE = 5L * 1024 * 1024;
     private static final String BACK = "redirect:/mypage/profile";
 
@@ -39,7 +40,7 @@ public class ProfileImgCommand extends MyPageCommand {
 
         try {
             String ext = validate(part);
-            String saved = save(request, part, me, ext);
+            String saved = save(part, ext);
             service.updateProfileImg(me, saved);
             setFlash(request, "success", "프로필 사진이 변경되었습니다.");
         } catch (MyPageException e) {
@@ -79,23 +80,24 @@ public class ProfileImgCommand extends MyPageCommand {
         return ext;
     }
 
-    private String save(HttpServletRequest request, Part part, int me, String ext)
-            throws MyPageException, IOException {
-        String realDir = request.getServletContext().getRealPath(UPLOAD_PATH);
-        if (realDir == null) {
-            throw new MyPageException("서버에 업로드 폴더를 만들 수 없습니다.");
-        }
-        File dir = new File(realDir);
-        if (!dir.exists() && !dir.mkdirs()) {
+    /**
+     * 최초 프로필 설정(auth OnboardingServlet)과 같은 폴더·같은 주소 형식으로 저장한다.
+     * 이미지는 /app/profile-image?file=... 로 보여지며, 서버를 재배포해도 지워지지 않는다.
+     */
+    private String save(Part part, String ext) throws MyPageException, IOException {
+        Path dir = Path.of(System.getProperty("user.home"), "roommate-uploads", "profile");
+        try {
+            Files.createDirectories(dir);
+        } catch (IOException e) {
             throw new MyPageException("서버에 업로드 폴더를 만들 수 없습니다.");
         }
 
-        // 파일명은 서버에서 생성 (사용자가 보낸 이름은 사용하지 않음)
-        String fileName = me + "_" + System.currentTimeMillis() + ext;
-        Path target = new File(dir, fileName).toPath();
+        // 파일명은 서버에서 생성 (사용자가 보낸 이름은 사용하지 않음). 형식: UUID.jpg / UUID.png
+        String fileName = UUID.randomUUID() + ext;
+        Path target = dir.resolve(fileName);
         try (InputStream in = part.getInputStream()) {
             Files.copy(in, target, StandardCopyOption.REPLACE_EXISTING);
         }
-        return UPLOAD_PATH + "/" + fileName;
+        return IMAGE_URL + fileName;
     }
 }

@@ -29,7 +29,7 @@ import util.SessionUtil;
 public class FrontController extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final String LOGIN_PAGE = "/views/auth/login.jsp";
+    private static final String LOGIN_PAGE = "/app/login"; // auth LoginServlet
 
     private RequestMapping requestMapping;
 

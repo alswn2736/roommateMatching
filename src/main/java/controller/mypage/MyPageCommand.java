@@ -19,7 +19,7 @@ import util.SessionUtil;
 public abstract class MyPageCommand implements Command {
 
     protected static final String FLASH = "mypageFlash";
-    protected static final String LOGIN_PAGE = "/views/auth/login.jsp";
+    protected static final String LOGIN_PAGE = "/app/login"; // auth LoginServlet
 
     protected final MyPageService service = MyPageService.getInstance();
 

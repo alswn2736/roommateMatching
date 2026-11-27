@@ -27,6 +27,7 @@ import model.dto.mypage.MyGroupDTO;
 import model.dto.mypage.MyPostDTO;
 import model.dto.mypage.ProfileView;
 import model.mapper.MyPageMapper;
+import model.util.auth.PasswordUtil;
 import util.MyBatisUtil;
 
 /**
@@ -61,8 +62,13 @@ public class MyPageService {
 
     /** 로그인 사용자 정보 (비밀번호 제외) */
     public ProfileView getMe(int studentId) throws SQLException, UserNotFoundException {
-        UserDTO user = UserService.getInstance().findUser(studentId);
-        return ProfileView.from(user);
+        try (SqlSession session = MyBatisUtil.openSession()) {
+            UserDTO user = new UserDAO(session.getConnection()).selectById(studentId);
+            if (user == null) {
+                throw new UserNotFoundException(studentId + "는 존재하지 않은 학번입니다.");
+            }
+            return ProfileView.from(user);
+        }
     }
 
     // ============================================================
@@ -107,8 +113,8 @@ public class MyPageService {
             throw new MyPageException("비밀번호 확인이 일치하지 않습니다.");
         }
         try (SqlSession session = MyBatisUtil.openSession()) {
-            // TODO: auth 쪽에서 비밀번호를 암호화(해시)해서 저장한다면 여기서도 같은 방식으로 변환해야 함
-            session.getMapper(MyPageMapper.class).updatePassword(studentId, newPw);
+            // 로그인(auth)과 같은 방식으로 해시해서 저장해야 다음 로그인 때 비밀번호가 일치한다
+            session.getMapper(MyPageMapper.class).updatePassword(studentId, PasswordUtil.hash(newPw));
             session.commit();
         }
     }
