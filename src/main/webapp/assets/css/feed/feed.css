@@ -180,16 +180,18 @@ button {
 
 #sortPosts {
     display: flex;
-    width: auto;
-    height: auto;
-    padding: 8px 16px;
-    align-items: flex-start;
+    width: 100px;
+    height: 40px;
+    padding: 8px 32px 8px 12px;
+    align-items: center;
     border: 1px solid #E8E0DE;
     border-radius: 8px;
     background-color: white;
     color: #241B1D;
     font-size: 13px;
     font-weight: 400;
+    white-space: nowrap;
+    background-position: right 10px center;
 }
 
 .writeButton {
@@ -217,6 +219,7 @@ button {
 
 .postCard {
     display: flex;
+    position: relative;
     padding: 24px;
     align-items: center;
     gap: 24px;
@@ -294,6 +297,12 @@ button {
     font-weight: 700;
 }
 
+.postBottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .postAuthor {
     display: flex;
     align-items: center;
@@ -359,4 +368,27 @@ button {
     padding: 48px 16px;
     color: #8C7D7D;
     text-align: center;
+}
+
+.editPostButton {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+    padding: 5px 12px;
+    border: 1px solid #E8E0DE;
+    border-radius: 6px;
+    background: #FFF;
+    color: #7A273F;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.editPostButton:hover {
+    background: #F5E7EB;
 }

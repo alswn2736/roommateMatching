@@ -1,12 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     const postList = document.getElementById("postList");
-    const keywordSearch = document.getElementById("keywordSearch");
-    const applyFilters = document.getElementById("applyFilters");
-    const resetFilters = document.getElementById("resetFilters");
-    const sortPosts = document.getElementById("sortPosts");
-    const postCount = document.getElementById("postCount");
-    const emptyMessage = document.getElementById("emptyMessage");
 
     if (!postList) {
         console.error("postList 요소를 찾을 수 없습니다.");
@@ -14,90 +8,50 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const cards = Array.from(postList.querySelectorAll(".postCard"));
-    
-    function filterPosts() {
 
-        const keyword = keywordSearch
-            ? keywordSearch.value.trim().toLowerCase()
-            : "";
+    // 등록일을 현재 시간 기준으로 표시
+    function formatRelativeDate(date) {
 
-        const selectedSmoking = Array.from(
-            document.querySelectorAll('input[name="smoking"]:checked')
-        ).map(function (input) {
-            return input.value;
-        });
+        const now = new Date();
+        const diff = now - date;
 
-        const selectedHabits = Array.from(
-            document.querySelectorAll('input[name="habit"]:checked')
-        ).map(function (input) {
-            return input.value;
-        });
+        const minutes = Math.floor(diff / (1000 * 60));
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-        let visibleCount = 0;
-
-        cards.forEach(function (card) {
-
-            const text = card.textContent.toLowerCase();
-            const smoking = card.dataset.smoking;
-            const habits = card.dataset.habits || "";
-
-            const keywordMatch = !keyword || text.includes(keyword);
-
-            const smokingMatch =
-                selectedSmoking.length === 0 ||
-                selectedSmoking.includes(smoking);
-
-            const habitsMatch = selectedHabits.every(function (habit) {
-                return habits.replace(/\s+/g, "").includes(
-                    habit.replace(/\s+/g, "")
-                );
-            });
-
-            const visible = keywordMatch && smokingMatch && habitsMatch;
-
-            card.hidden = !visible;
-
-            if (visible) {
-                visibleCount++;
-            }
-        });
-
-        if (postCount) {
-            postCount.textContent = visibleCount;
-        }
-
-        if (emptyMessage) {
-            emptyMessage.hidden = visibleCount !== 0;
+        if (minutes < 1) {
+            return "방금 전";
+        } else if (minutes < 60) {
+            return minutes + "분 전";
+        } else if (hours < 24) {
+            return hours + "시간 전";
+        } else if (days < 8) {
+            return days + "일 전";
+        } else {
+            return date.getFullYear() + "." +
+                String(date.getMonth() + 1).padStart(2, "0") + "." +
+                String(date.getDate()).padStart(2, "0");
         }
     }
-    
-    if (applyFilters) {
-        applyFilters.addEventListener("click", filterPosts);
-    }
-    
-    if (sortPosts) {
-        sortPosts.addEventListener("change", function () {
 
-            const sortedCards = cards.slice();
+    // 모든 게시글의 등록일 표시
+    cards.forEach(function (card) {
 
-            sortedCards.sort(function (a, b) {
+        const date = new Date(Number(card.dataset.date));
+        const relativeDate = card.querySelector(".relativeDate");
 
-                const aDate = Number(a.dataset.date);
-                const bDate = Number(b.dataset.date);
+        if (relativeDate) {
+            relativeDate.textContent = formatRelativeDate(date);
+        }
+    });
 
-                return sortPosts.value === "latest"
-                    ? bDate - aDate
-                    : aDate - bDate;
-            });
-
-            sortedCards.forEach(function (card) {
-                postList.appendChild(card);
-            });
-        });
-    }
-    
+    // 게시글 클릭 시 상세 모달 열기
     postList.addEventListener("click", function (event) {
-
+		// 수정 버튼 클릭 시 상세 모달을 열지 않음
+		if (event.target.closest(".editPostButton")) {
+		    return;
+		}
+		
         const card = event.target.closest(".postCard");
 
         if (!card) {
@@ -112,7 +66,5 @@ document.addEventListener("DOMContentLoaded", function () {
             );
         }
     });
-	
-    filterPosts();
 
 });

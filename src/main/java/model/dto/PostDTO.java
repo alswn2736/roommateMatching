@@ -7,6 +7,7 @@ public class PostDTO {
     private String title;
     private int capacity;
     private int acceptedCount;
+    private String roomType;
     private String kwSmoking;
     private String kwSleepTime;
     private String kwSensitivity;
@@ -15,10 +16,14 @@ public class PostDTO {
     private String status;
     private String content;
     private Timestamp createAt;
+    private String nickname;
+    private String profileImg;
+    private String studentId;
+    private String major;
 
     public PostDTO() {}
     
-    public PostDTO(int postId, int writerId, String title, int capacity, int acceptedCount, String kwSmoking,
+    public PostDTO(int postId, int writerId, String title, int capacity, int acceptedCount, String roomType, String kwSmoking,
             String kwSleepTime, String kwSensitivity, String kwAirCon, String kwClean, String status, String content,
             Timestamp createAt) {
         super();
@@ -27,6 +32,7 @@ public class PostDTO {
         this.title = title;
         this.capacity = capacity;
         this.acceptedCount = acceptedCount;
+        this.roomType = roomType;
         this.kwSmoking = kwSmoking;
         this.kwSleepTime = kwSleepTime;
         this.kwSensitivity = kwSensitivity;
@@ -52,6 +58,9 @@ public class PostDTO {
     public int getAcceptedCount() { return acceptedCount; }
     public void setAcceptedCount(int acceptedCount) { this.acceptedCount = acceptedCount; }
 
+    public String getRoomType() { return roomType; }
+    public void setRoomType(String roomType) { this.roomType = roomType; }
+    
     public String getKwSmoking() { return kwSmoking; }
     public void setKwSmoking(String kwSmoking) { this.kwSmoking = kwSmoking; }
 
@@ -76,4 +85,16 @@ public class PostDTO {
     public Timestamp getCreateAt() { return createAt; }
     public void setCreateAt(Timestamp createAt) { this.createAt = createAt; }
 
+    public String getNickname() { return nickname; }
+    public void setNickname(String nickname) { this.nickname = nickname; }
+
+    public String getProfileImg() { return profileImg; }
+    public void setProfileImg(String profileImg) { this.profileImg = profileImg; }
+
+    public String getStudentId() { return studentId; }
+    public void setStudentId(String studentId) { this.studentId = studentId; }
+
+    public String getMajor() { return major; }
+    public void setMajor(String major) { this.major = major; }
+    
 }
