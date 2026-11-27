@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -45,7 +46,8 @@
 					<p>룸메이트 계정으로 로그인해주세요.</p>
 				</div>
 
-				<form id="loginForm" class="login-form">
+				<form id="loginForm" class="login-form"
+					action="${pageContext.request.contextPath}/app/login" method="post">
 					<div class="login-fields">
 						<div class="login-field">
 							<label for="schoolEmail" class="form-label">학교 이메일</label> <input
@@ -68,10 +70,15 @@
 					</div>
 
 					<div class="login-actions">
+						<c:if test="${not empty error}">
+							<p class="text-danger small" role="alert">
+								<c:out value="${error}" />
+							</p>
+						</c:if>
 						<button type="submit" class="btn login-submit">로그인</button>
 						<p class="signup-guide">
-							처음이신가요? <a
-								href="${pageContext.request.contextPath}/views/auth/signup.jsp">회원가입하기</a>
+							처음이신가요? 
+							<a href="${pageContext.request.contextPath}/app/signup">회원가입하기</a>
 						</p>
 					</div>
 				</form>
@@ -92,7 +99,6 @@
 					eyeIcon.className = isHidden ? "bi bi-eye"
 							: "bi bi-eye-slash";
 				});
-
 	</script>
 </body>
 </html>

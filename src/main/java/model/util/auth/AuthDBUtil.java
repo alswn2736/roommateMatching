@@ -16,6 +16,11 @@ public class AuthDBUtil {
             System.getenv("ROOMMATE_DB_PASSWORD");
 
     public static Connection getConnection() throws SQLException {
+        try {
+            Class.forName("oracle.jdbc.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            throw new SQLException("Oracle JDBC 드라이버 로딩 실패", e);
+        }
         return DriverManager.getConnection(URL, USERNAME, PASSWORD);
     }
 }
