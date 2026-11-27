@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById("detailModalOverlay");
     const closeButton = document.getElementById("closeDetailModal");
     const applyButton = document.getElementById("openApplyModal");
+	const detailCapacity = document.getElementById("detailCapacity");
 
     if (!overlay) {
         console.error("detailModalOverlay를 찾을 수 없습니다.");
@@ -38,25 +39,41 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 		
         if (detailAuthorName) {
-            detailAuthorName.textContent = card.dataset.author || "";
+            detailAuthorName.textContent = card.dataset.nickname || "";
         }
 		
-        if (detailAuthorInfo) {
-            detailAuthorInfo.textContent = card.dataset.authorInfo || "";
-        }
+		if (detailAuthorInfo) {
+		    detailAuthorInfo.textContent =
+		        (card.dataset.major || "") + " · " +
+		        (card.dataset.authorInfo || "");
+		}
 		
-        if (avatarImage && avatarFallback) {
+		if (avatarImage && avatarFallback) {
+		    const profile = card.dataset.profile;
 
-            avatarFallback.textContent = card.dataset.avatar || "룸";
+		    if (profile) {
+		        avatarImage.src = profile;
+		        avatarImage.hidden = false;
+		        avatarFallback.hidden = true;
+		    } else {
+		        avatarImage.hidden = true;
+		        avatarFallback.hidden = false;
+		        avatarFallback.textContent = card.dataset.avatar || "룸";
+		    }
 
-            avatarImage.hidden = false;
-            avatarFallback.hidden = true;
+		    avatarImage.onerror = function () {
+		        avatarImage.hidden = true;
+		        avatarFallback.hidden = false;
+		    };
+		}
+		
+		if (detailRoomType) {
+		    detailRoomType.textContent = "기숙사" + card.dataset.room || "";
+		}
 
-            avatarImage.onerror = function () {
-                avatarImage.hidden = true;
-                avatarFallback.hidden = false;
-            };
-        }
+		if (detailCapacity) {
+		    detailCapacity.textContent = (card.dataset.capacity || "0") + "명";
+		}
 		
         if (detailSmoking) {
             detailSmoking.textContent =
@@ -69,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (detailSleep) {
             detailSleep.textContent =
-                habits.includes("아침형") ? "아침형 (6~7시 기상)" :
+                habits.includes("아침형") ? "아침형" :
                 habits.includes("저녁형") ? "저녁형" :
                 "미입력";
         }
@@ -83,26 +100,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     : defaultDescription;
         }
 		
-        if (tagContainer) {
-            tagContainer.replaceChildren();
+		if (tagContainer) {
+		    tagContainer.replaceChildren();
+			
+		    const tags = card.querySelectorAll(".postTags span");
 
-            const tags = card.querySelectorAll(".postTags span");
-
-            if (tags.length > 0) {
-                tags.forEach(function (tag) {
-                    const span = document.createElement("span");
-                    span.textContent = tag.textContent;
-                    tagContainer.appendChild(span);
-                });
-            } else {
-                ["#아침형", "#비흡연", "#깔끔", "#조용한 편"]
-                    .forEach(function (tagText) {
-                        const span = document.createElement("span");
-                        span.textContent = tagText;
-                        tagContainer.appendChild(span);
-                    });
-            }
-        }
+		    tags.forEach(function (tag) {
+		        const span = document.createElement("span");
+		        span.textContent = tag.textContent;
+		        tagContainer.appendChild(span);
+		    });
+		}
 		
         overlay.dataset.postId = card.dataset.id || "";
 		

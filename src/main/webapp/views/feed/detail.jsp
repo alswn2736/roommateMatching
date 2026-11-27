@@ -20,28 +20,28 @@
         </div>
         
         <div class="detailAuthor">
-            <div class="detailAvatar" id="detailAvatar">
-                <img
-                    id="detailAvatarImage"
-                    src="${pageContext.request.contextPath}/assets/image/feed/profile.jpg"
-                    alt="프로필 사진">
-                <span id="detailAvatarFallback" hidden>얼</span>
-            </div>
-
-            <div>
-                <strong id="detailAuthorName">얼리버드</strong>
-                <p id="detailAuthorInfo">컴퓨터공학과 · 20학번</p>
-            </div>
-        </div>
+		    <div class="detailAvatar" id="detailAvatar">
+		        <img
+		            id="detailAvatarImage"
+		            src="${pageContext.request.contextPath}/assets/image/feed/profile.jpg"
+		            alt="프로필 사진">
+		        <span id="detailAvatarFallback" hidden>룸</span>
+		    </div>
+		
+		    <div>
+		        <strong id="detailAuthorName">닉네임</strong>
+		        <p id="detailAuthorInfo">컴퓨터학과 · 26학번</p>
+		    </div>
+		</div>
         
         <hr>
         
         <div class="detailFacts">
 
             <div class="detailFact">
-                <span>모집 인원</span>
-                <strong>1명</strong>
-            </div>
+			    <span>모집 인원</span>
+			    <strong id="detailCapacity">0명</strong>
+			</div>
 
             <div class="detailFact">
                 <span>희망 기간</span>
