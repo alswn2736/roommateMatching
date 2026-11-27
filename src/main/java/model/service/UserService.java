@@ -9,6 +9,7 @@ import model.dto.UserDTO;
 import model.util.auth.AuthDBUtil;
 import model.util.auth.PasswordUtil;
 import java.nio.charset.StandardCharsets;
+import model.dao.UserMyBatisDAO;
 
 //회원가입, 로그인, 프로필 설정을 처리하는 Manager 클래스
 public class UserService {
@@ -77,32 +78,25 @@ public class UserService {
 
         email = normalizeEmail(email);
 
-        try (Connection conn = AuthDBUtil.getConnection()) {
+        UserMyBatisDAO dao = new UserMyBatisDAO();
+        UserDTO dto = dao.selectByEmail(email);
 
-            UserDAO dao = new UserDAO(conn);
+        if (dto == null ||
+                !PasswordUtil.matches(password, dto.getPassword())) {
 
-            UserDTO dto = dao.selectByEmail(email);
-
-            if (dto == null ||
-                    !PasswordUtil.matches(password, dto.getPassword())) {
-
-                throw new IllegalArgumentException(
-                        "이메일 또는 비밀번호가 올바르지 않습니다.");
-            }
-
-            return new User(dto);
+            throw new IllegalArgumentException(
+                    "이메일 또는 비밀번호가 올바르지 않습니다.");
         }
+
+        return new User(dto);
     }
 
     public User getProfile(int studentId) throws SQLException {
 
-        try (Connection conn = AuthDBUtil.getConnection()) {
+        UserMyBatisDAO dao = new UserMyBatisDAO();
+        UserDTO dto = dao.selectById(studentId);
 
-            UserDAO dao = new UserDAO(conn);
-            UserDTO dto = dao.selectById(studentId);
-
-            return dto == null ? null : new User(dto);
-        }
+        return dto == null ? null : new User(dto);
     }
 
     public User makeProfile(UserDTO profile) throws SQLException {
