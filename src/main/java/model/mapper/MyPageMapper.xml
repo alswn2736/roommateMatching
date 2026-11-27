@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="model.mapper.MyPageMapper">
+
+    <!-- ==================== 프로필 ==================== -->
+
+    <!-- 컬럼명은 파라미터를 그대로 쓰지 않고 choose 로 화이트리스트 처리 (SQL Injection 방지) -->
+    <update id="updateVisibility">
+        UPDATE users
+        <set>
+            <choose>
+                <when test="field == 'namePublic'">namepublic = #{value}</when>
+                <when test="field == 'studentIdPublic'">studentidpublic = #{value}</when>
+                <when test="field == 'majorPublic'">majorpublic = #{value}</when>
+                <otherwise>studentid = studentid</otherwise>
+            </choose>
+        </set>
+        WHERE studentid = #{studentId}
+    </update>
+
+    <!-- ==================== 계정 ==================== -->
+
+    <update id="updatePassword">
+        UPDATE users SET password = #{password} WHERE studentid = #{studentId}
+    </update>
+
+    <!-- ==================== 신청자 관리 ==================== -->
+
+    <select id="selectPostsByWriter" parameterType="int" resultType="model.dto.PostDTO">
+        SELECT postid, writerid, title, capacity, acceptedcount,
+               kwsmoking, kwsleeptime, kwsensitivity, kwaircon, kwclean,
+               status, content, createat
+        FROM post
+        WHERE writerid = #{writerId}
+        ORDER BY createat DESC
+    </select>
+
+    <!-- 거절된 신청은 화면에 보이지 않음 -->
+    <select id="selectApplicantsByPost" parameterType="int" resultType="model.dto.mypage.ApplicantDTO">
+        SELECT a.applyid, a.postid, a.introduction, a.status, a.createat,
+               u.studentid, u.nickname, u.name, u.major, u.profileimg,
+               u.namepublic, u.studentidpublic, u.majorpublic
+        FROM apply a
+             JOIN users u ON u.studentid = a.applicantid
+        WHERE a.postid = #{postId}
+          AND a.status IN ('PENDING', 'ACCEPTED')
+        ORDER BY CASE a.status WHEN 'PENDING' THEN 0 ELSE 1 END, a.createat
+    </select>
+
+    <update id="increaseAcceptedCount" parameterType="int">
+        UPDATE post SET acceptedcount = NVL(acceptedcount, 0) + 1 WHERE postid = #{postId}
+    </update>
+
+    <update id="updatePostStatus">
+        UPDATE post SET status = #{status} WHERE postid = #{postId}
+    </update>
+
+    <update id="rejectPendingByPost" parameterType="int">
+        UPDATE apply SET status = 'REJECTED' WHERE postid = #{postId} AND status = 'PENDING'
+    </update>
+
+    <select id="selectAcceptedApplicantIds" parameterType="int" resultType="int">
+        SELECT applicantid FROM apply WHERE postid = #{postId} AND status = 'ACCEPTED' ORDER BY createat
+    </select>
+
+    <select id="nextGroupId" resultType="int">
+        SELECT NVL(MAX(groupid), 0) + 1 FROM groups
+    </select>
+
+    <!-- ==================== 매칭 정보 ==================== -->
+
+    <select id="selectGroupsByStudent" parameterType="int" resultType="model.dto.GroupDTO">
+        SELECT g.groupid, g.capacity, g.academicyear, g.semester, g.status
+        FROM groups g
+             JOIN group_member m ON m.groupid = g.groupid
+        WHERE m.studentid = #{studentId}
+        ORDER BY CASE WHEN g.status = 'ACTIVE' THEN 0 ELSE 1 END,
+                 g.academicyear DESC, g.semester DESC, g.groupid DESC
+    </select>
+
+    <select id="selectMembersByGroup" parameterType="int" resultType="model.dto.mypage.ProfileView">
+        SELECT u.studentid, u.nickname, u.name, u.major, u.profileimg,
+               u.namepublic, u.studentidpublic, u.majorpublic
+        FROM group_member m
+             JOIN users u ON u.studentid = m.studentid
+        WHERE m.groupid = #{groupId}
+        ORDER BY u.studentid
+    </select>
+
+    <select id="countGroupMember" resultType="int">
+        SELECT COUNT(*) FROM group_member WHERE groupid = #{groupId} AND studentid = #{studentId}
+    </select>
+
+    <select id="countPendingLeave" resultType="int">
+        SELECT COUNT(*) FROM leavegroup
+        WHERE groupid = #{groupId} AND requesterid = #{studentId} AND status = 'PENDING'
+    </select>
+
+    <select id="nextLeaveId" resultType="int">
+        SELECT NVL(MAX(leaveid), 0) + 1 FROM leavegroup
+    </select>
+
+    <!-- ==================== 회원 탈퇴 ==================== -->
+    <!-- FK 순서: chat → apply → post → (그룹 관련) → group_member → users -->
+
+    <delete id="deleteChatsOfUser" parameterType="int">
+        DELETE FROM chat
+        WHERE writerid = #{studentId}
+           OR applyid IN (SELECT applyid FROM apply WHERE applicantid = #{studentId})
+           OR applyid IN (SELECT a.applyid FROM apply a JOIN post p ON p.postid = a.postid
+                          WHERE p.writerid = #{studentId})
+    </delete>
+
+    <delete id="deleteAppliesOfUser" parameterType="int">
+        DELETE FROM apply
+        WHERE applicantid = #{studentId}
+           OR postid IN (SELECT postid FROM post WHERE writerid = #{studentId})
+    </delete>
+
+    <delete id="deletePostsOfUser" parameterType="int">
+        DELETE FROM post WHERE writerid = #{studentId}
+    </delete>
+
+    <delete id="deleteRuleAgreementsOfUser" parameterType="int">
+        DELETE FROM ruleagreement WHERE memberid = #{studentId}
+    </delete>
+
+    <delete id="deleteLeaveConsentsOfUser" parameterType="int">
+        DELETE FROM leaveconsent WHERE memberid = #{studentId}
+    </delete>
+
+    <update id="clearLeaveRequester" parameterType="int">
+        UPDATE leavegroup SET requesterid = NULL WHERE requesterid = #{studentId}
+    </update>
+
+    <update id="clearRoleAssignee" parameterType="int">
+        UPDATE role SET assigneeid = NULL WHERE assigneeid = #{studentId}
+    </update>
+
+    <update id="clearSettlementPayer" parameterType="int">
+        UPDATE settlementlist SET payerid = NULL WHERE payerid = #{studentId}
+    </update>
+
+    <delete id="deleteGroupMembershipsOfUser" parameterType="int">
+        DELETE FROM group_member WHERE studentid = #{studentId}
+    </delete>
+
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM users WHERE studentid = #{studentId}
+    </delete>
+</mapper>

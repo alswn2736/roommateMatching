@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- DB 컬럼 snake/소문자 ↔ 자바 camelCase 자동 매핑 (studentid → studentId 는 대소문자 무시로 매핑됨) -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- NULL 파라미터를 Oracle 에 넘길 때 타입 지정 -->
+        <setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
+
+    <environments default="oracle">
+        <environment id="oracle">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+                <property name="poolPingEnabled" value="true"/>
+                <property name="poolPingQuery" value="SELECT 1 FROM DUAL"/>
+                <property name="poolPingConnectionsNotUsedFor" value="600000"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="model/mapper/MyPageMapper.xml"/>
+    </mappers>
+</configuration>

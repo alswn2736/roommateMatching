@@ -285,3 +285,47 @@ body {
     font-size: 13px;
     font-weight: 400;
 }
+
+/* ===== 백엔드 연동 추가 ===== */
+.profileImg {
+    flex-shrink: 0;
+    background-color: #EFEBE8;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.btnLeave {
+    cursor: pointer;
+}
+
+.btnLeave:disabled {
+    opacity: .6;
+    cursor: default;
+}
+
+.emptyCard {
+    display: flex;
+    padding: 40px 28px;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+    color: #7C6F72;
+    font-family: Inter, "Noto Sans KR";
+    font-size: 14px;
+}
+
+.emptyLink {
+    color: #7A273F;
+    font-weight: 700;
+}
+
+.emptyText {
+    color: #7C6F72;
+    font-family: Inter, "Noto Sans KR";
+    font-size: 13px;
+}

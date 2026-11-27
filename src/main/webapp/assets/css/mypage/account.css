@@ -270,3 +270,40 @@ body {
     font-size: 14px;
     font-weight: 600;
 }
+
+/* ===== 백엔드 연동 추가 ===== */
+.btnSavePassword,
+.btnDelete {
+    border: none;
+    cursor: pointer;
+}
+
+.btnLogout {
+    background: #FFF;
+    cursor: pointer;
+}
+
+.flashMessage {
+    align-self: stretch;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-family: Inter, "Noto Sans KR";
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.flashMessage.success {
+    color: #03543F;
+    background: #DEF7EC;
+}
+
+.flashMessage.error {
+    color: #B91C1C;
+    background: #FDE8E8;
+}
+
+/* quirks 모드에서 form 기본 여백 제거 */
+form.logoutCard,
+form.deleteActionRow {
+    margin: 0;
+}
