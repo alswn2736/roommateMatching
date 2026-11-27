@@ -104,3 +104,11 @@ a {
     font-weight: 700;
     line-height: normal;
 }
+
+/* 업로드한 프로필 사진이 원 안에 꽉 차도록 */
+.minProfileImg {
+    background-color: #EFEBE8;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}

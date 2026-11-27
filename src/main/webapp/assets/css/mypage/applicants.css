@@ -438,3 +438,105 @@ line-height: normal;
     font-size: 13px;
     font-weight: 400;
 }
+
+/* ===== 백엔드 연동 추가 ===== */
+.profileImg {
+    flex-shrink: 0;
+    background-color: #EFEBE8;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* 채팅이 닫혀 있을 때: 정보 영역만 한 줄로, 채팅 영역은 숨김 */
+.applicantCardNone > .applicantInfo {
+    flex: 1 0 0;
+}
+
+.applicantCardNone > .chatSection {
+    display: none;
+}
+
+.chatHistory {
+    max-height: 280px;
+    overflow-y: auto;
+}
+
+.chatEmpty {
+    color: #7C6F72;
+    font-family: Inter, "Noto Sans KR";
+    font-size: 12px;
+}
+
+.btnChat,
+.btnAccept,
+.btnSend {
+    border: none;
+    cursor: pointer;
+}
+
+.btnDecline {
+    cursor: pointer;
+}
+
+.btnChat:disabled,
+.btnAccept:disabled,
+.btnDecline:disabled,
+.btnSend:disabled {
+    opacity: .5;
+    cursor: default;
+}
+
+.recruitingCard > summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.recruitingCard > summary::-webkit-details-marker {
+    display: none;
+}
+
+.acceptedBadge {
+    display: flex;
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: #DEF7EC;
+}
+
+.acceptedBadge > span {
+    color: #03543F;
+    font-family: Inter, "Noto Sans KR";
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.emptyCard {
+    display: flex;
+    padding: 40px 28px;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    align-self: stretch;
+    border-radius: 16px;
+    border: 1px solid #E7E1DF;
+    background: #FFF;
+    color: #7C6F72;
+    font-family: Inter, "Noto Sans KR";
+    font-size: 14px;
+}
+
+.emptyLink {
+    color: #7A273F;
+    font-weight: 700;
+}
+
+.emptyText {
+    color: #7C6F72;
+    font-family: Inter, "Noto Sans KR";
+    font-size: 14px;
+}
+
+/* 모집완료 카드의 화살표는 오른쪽(→)을 그대로 보이게 */
+.recruitedCard .arrowToggleChevron {
+    transform: none;
+}

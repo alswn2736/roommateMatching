@@ -1,15 +1,23 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%-- JSP 를 직접 열면(데이터 없음) 컨트롤러를 거치도록 이동 --%>
+<c:if test="${empty me}"><c:redirect url="/mypage/profile" /></c:if>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 
-    <%@ include file =  "/views/common/head.jsp" %>    
+    <%@ include file =  "/views/common/head.jsp" %>
     <link href="${pageContext.request.contextPath}/assets/css/mypage/profile.css" rel="stylesheet" type="text/css">
+    <script defer src="${pageContext.request.contextPath}/assets/js/mypage/profile.js"></script>
     <title>profile</title>
     </head>
-    <body>
+    <body data-ctx="${pageContext.request.contextPath}">
         <%@ include file = "/views/common/header.jsp" %>
         <div class="mainLayout">
             <%@ include file = "/views/mypage/mypage_leftsidebar.jsp" %>
             <div class="profileMain">
                 <span class="title">프로필 관리</span>
+                <c:if test="${not empty flash}">
+                    <div class="flashMessage ${flash.type}"><c:out value="${flash.message}" /></div>
+                </c:if>
                 <div class="infoWarning">
                     <div class="infoWarningSign">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -22,30 +30,63 @@
                     </div>
                 </div>
                 <div class="profileSetting">
-                    <form>
+                    <form class="profileImgForm" action="${ctx}/mypage/profile/image" method="post" enctype="multipart/form-data">
                         <div class="updateProfileImg">
                             <div class="updateProfileHeader">
                                 <div class="updateProfileHeaderTitle">
                                     <span class="profileTitle">프로필 사진 변경</span>
                                     <span class="profileSubtitle">JPG, PNG 형식의 5MB 이하 파일만 업로드할 수 있습니다.</span>
                                 </div>
-                                <button class="saveProfileImgBtn">
+                                <button type="submit" class="saveProfileImgBtn">
                                     <span>사진 저장</span>
                                 </button>
                             </div>
                             <div class="updateProfileImgContent">
                                 <div class="proviewArea">
                                     <div class="preview">
-                                        <div class="ProfileImg" style="background-image: url('${pageContext.request.contextPath}/assets/image/mypage/profile.jpg');"></div>
+                                        <div class="ProfileImg" style="background-image: url('${ctx}<c:out value="${me.profileImgPath}"/>');"></div>
                                     </div>
                                     <span>적용될 이미지 비율</span>
                                 </div>
                                 <div class="editProfileArea">
-                                    <input type="file" class="newImageUpload">
+                                    <input type="file" class="newImageUpload" name="profileImg" accept=".jpg,.jpeg,.png,image/jpeg,image/png">
                                 </div>
                             </div>
                         </div>
                     </form>
+                    <span class="updateInfoHeader">내 기본 정보 및 공개 범위</span>
+                    <div class="updateInfo">
+                        <div class="info">
+                            <div class="infoContent">
+                                <span class="infoTitle">이름</span>
+                                <span class="infoText"><c:out value="${me.myName}" /></span>
+                            </div>
+                            <div class="infoPublic">
+                                <span class="infoPublicText">${me.nameOpen ? '공개됨' : '비공개'}</span>
+                                <div class="infoPublicToggle" data-field="namePublic"></div>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div class="infoContent">
+                                <span class="infoTitle">학번</span>
+                                <span class="infoText"><c:out value="${me.yearLabel}" /></span>
+                            </div>
+                            <div class="infoPublic">
+                                <span class="infoPublicText">${me.studentIdOpen ? '공개됨' : '비공개'}</span>
+                                <div class="infoPublicToggle" data-field="studentIdPublic"></div>
+                            </div>
+                        </div>
+                        <div class="info">
+                            <div class="infoContent">
+                                <span class="infoTitle">학과</span>
+                                <span class="infoText"><c:out value="${me.myMajor}" /></span>
+                            </div>
+                            <div class="infoPublic">
+                                <span class="infoPublicText">${me.majorOpen ? '공개됨' : '비공개'}</span>
+                                <div class="infoPublicToggle" data-field="majorPublic"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

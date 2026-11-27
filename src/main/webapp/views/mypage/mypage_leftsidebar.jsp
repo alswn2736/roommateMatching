@@ -1,24 +1,27 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%-- me(로그인 사용자), menu(현재 메뉴)는 각 마이페이지 Command 에서 request 에 담아 준다 --%>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 <div class="mypageLeftsidebar">
     <div class="minProfile">
-        <div class="minProfileImg" style="background-image: url('${pageContext.request.contextPath}/assets/image/mypage/Avatar.png');"></div>
+        <div class="minProfileImg" style="background-image: url('${ctx}<c:out value="${me.profileImgPath}"/>');"></div>
         <div class="nameMajor">
-            <div class="minProfileName">김솜솜</div>
-            <div class="minProfileClass">컴퓨터공학과</div>
+            <div class="minProfileName"><c:out value="${me.myName}" /></div>
+            <div class="minProfileClass"><c:out value="${me.myMajor}" /></div>
         </div>
     </div>
     <ul class="menuContainer">
-        <li class="menuItem">
-            <a href="${pageContext.request.contextPath}/views/mypage/profile.jsp">프로필 관리</a>
+        <li class="menuItem ${menu == 'profile' ? 'active' : ''}">
+            <a href="${ctx}/mypage/profile">프로필 관리</a>
         </li>
-        <li class="menuItem">
-            <a href="${pageContext.request.contextPath}/views/mypage/applicants.jsp">신청자 관리</a>
+        <li class="menuItem ${menu == 'applicants' ? 'active' : ''}">
+            <a href="${ctx}/mypage/applicants">신청자 관리</a>
         </li>
-        <li class="menuItem">
-            <a href="${pageContext.request.contextPath}/views/mypage/matched.jsp">매칭 정보</a>
+        <li class="menuItem ${menu == 'matched' ? 'active' : ''}">
+            <a href="${ctx}/mypage/matched">매칭 정보</a>
         </li>
-        <li class="menuItem">
-            <a href="${pageContext.request.contextPath}/views/mypage/account.jsp">계정 설정</a>
+        <li class="menuItem ${menu == 'account' ? 'active' : ''}">
+            <a href="${ctx}/mypage/account">계정 설정</a>
         </li>
     </ul>
 </div>

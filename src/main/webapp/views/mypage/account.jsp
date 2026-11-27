@@ -1,7 +1,12 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%-- JSP 를 직접 열면(데이터 없음) 컨트롤러를 거치도록 이동 --%>
+<c:if test="${empty me}"><c:redirect url="/mypage/account" /></c:if>
+<c:set var="ctx" value="${pageContext.request.contextPath}" />
 
 <%@ include file =  "/views/common/head.jsp" %>
 <link href="${pageContext.request.contextPath}/assets/css/mypage/account.css" rel="stylesheet" type="text/css">
+<script defer src="${pageContext.request.contextPath}/assets/js/mypage/account.js"></script>
 <title>Account Information</title>
 </head>
 
@@ -15,38 +20,43 @@
                 <span class="title">계정 설정</span>
                 <span class="subtitle">본인 인증 정보 및 계정 보안 설정을 수정하고 사이트 상태를 관리합니다.</span>
             </div>
+            <c:if test="${not empty flash}">
+                <div class="flashMessage ${flash.type}"><c:out value="${flash.message}" /></div>
+            </c:if>
             <div class="accountCard">
                 <span>계정 기본 정보 및 비밀번호 변경</span>
-                <form class="formInputs" name="modifyAccount" method="post">
+                <form class="formInputs" name="modifyAccount" method="post" action="${ctx}/mypage/account/password">
                     <div class="fieldRow">
                         <span>학교 인증 이메일 (변경 불가)</span>
-                        <input class="studentMail" placeholder="student@university.ac.kr" readonly>
+                        <input class="studentMail" value="<c:out value="${me.email}"/>" placeholder="student@university.ac.kr" readonly>
                     </div>
                     <div class="passwordInputs">
                         <div class="newPassword">
                             <span>새 비밀번호</span>
-                            <input class="newPwInput" type="password" name="newPw">
+                            <input class="newPwInput" type="password" name="newPw" minlength="8"
+                                   placeholder="8자리 이상 입력" autocomplete="new-password" required>
                         </div>
                         <div class="newPassword">
                             <span>비밀번호 확인</span>
-                            <input class="newPwInput" type="password" name="confirmNewPw">
+                            <input class="newPwInput" type="password" name="confirmNewPw" minlength="8"
+                                   autocomplete="new-password" required>
                         </div>
                     </div>
                     <div class="saveRow">
-                        <button class="btnSavePassword">
+                        <button type="submit" class="btnSavePassword">
                             <span>비밀번호 변경 적용</span>
                         </button>
                     </div>
                 </form>
             </div>
-            <div class="logoutCard">
+            <form class="logoutCard" method="post" action="${ctx}/mypage/account/logout">
                 <div class="infoText">
                     <span>로그아웃</span>
                 </div>
-                <button class="btnLogout">
+                <button type="submit" class="btnLogout">
                     <span>로그아웃</span>
                 </button>
-            </div>
+            </form>
             <div class="deleteZoneCard">
                 <div class="deleteHeader">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -68,12 +78,14 @@
                     <span class="description">• 프로필 정보 </span>
                     <span class="description">• 과거 진행 중이거나 매칭되었던 다른 룸메이트 학우들과의 대화 내역 전체</span>
                 </div>
-                <div class="deleteActionRow">
-                    <button class="btnDelete">
+                <form class="deleteActionRow" method="post" action="${ctx}/mypage/account/withdraw">
+                    <input type="hidden" name="confirmation" value="">
+                    <button type="submit" class="btnDelete">
                         <span>룸메이트 서비스 탈퇴하기</span>
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </body>
+</html>
