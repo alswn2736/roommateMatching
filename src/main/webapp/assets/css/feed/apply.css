@@ -144,6 +144,14 @@
     color: #7C6F72;
 }
 
+.applyForm {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    width: 100%;
+    gap: 28px;
+}
+
 .characterCount {
     align-self: stretch;
     color: #7C6F72;

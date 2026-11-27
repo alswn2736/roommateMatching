@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <div class="modalOverlay" id="applyModalOverlay" hidden>
     <section class="applyModal" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle">
@@ -33,30 +33,34 @@
             </div>
         </div>
         
-        <div class="applyMessageField">
-            <label for="applyMessage">보낼 한 마디</label>
-            <div class="applyMessageBox">
-                <textarea
-				    id="applyMessage"
-				    class="form-control"
-				    maxlength="300"
-				    placeholder="안녕하세요! 룸메 구하는 글 보고 신청합니다. 저도 비흡연에 잠귀가 어두운 편이라..."
-				    required></textarea>
-                    
-                <div class="characterCount">
-                    <span id="applyCharacterCount">0</span> / 300자
-                </div>
-            </div>
-        </div>
-        
-        <div class="applyActions">
-		    <button type="button" id="cancelApplyModal" class="btn applyCancelButton">
-		        취소
-		    </button>
-		
-		    <button type="submit" id="submitApply" class="btn applySubmitButton">
-		        신청하기
-		    </button>
-		</div>
+        <form id="applyForm" class="applyForm" action="${pageContext.request.contextPath}/app/feed/apply" method="post">
+        	<input type="hidden" id="applyPostId" name="postId">
+	        <div class="applyMessageField">
+	            <label for="applyMessage">보낼 한 마디</label>
+	            <div class="applyMessageBox">
+	                <textarea
+					    id="applyMessage"
+					    name="introduction"
+					    class="form-control"
+					    maxlength="300"
+					    placeholder="안녕하세요! 룸메 구하는 글 보고 신청합니다. 저도 비흡연에 잠귀가 어두운 편이라..."
+					    required></textarea>
+	                    
+	                <div class="characterCount">
+	                    <span id="applyCharacterCount">0</span> / 300자
+	                </div>
+	            </div>
+	        </div>
+	        
+	        <div class="applyActions">
+			    <button type="button" id="cancelApplyModal" class="btn applyCancelButton">
+			        취소
+			    </button>
+			
+			    <button type="submit" id="submitApply" class="btn applySubmitButton">
+			        신청하기
+			    </button>
+			</div>
+		</form>
     </section>
 </div>

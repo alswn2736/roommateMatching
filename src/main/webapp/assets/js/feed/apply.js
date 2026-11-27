@@ -5,8 +5,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const count = document.getElementById("applyCharacterCount");
 
     const cancelButton = document.getElementById("cancelApplyModal");
-    const submitButton = document.getElementById("submitApply");
-
+	
+	const form = document.getElementById("applyForm");
+	const postIdInput = document.getElementById("applyPostId");
+	
     if (!overlay || !message) return;
     
     function updateCount() {
@@ -39,21 +41,34 @@ document.addEventListener("DOMContentLoaded", function () {
             closeApply();
         }
     });
+
+	if (form) {
+	    form.addEventListener("submit", function (event) {
+	        const postId = overlay.dataset.postId;
+
+	        if (!postId) {
+	            event.preventDefault();
+	            alert("신청할 모집글을 찾을 수 없습니다.");
+	            return;
+	        }
+
+	        postIdInput.value = postId;
+
+	        if (!message.value.trim()) {
+	            event.preventDefault();
+	            alert("보낼 한 마디를 입력해 주세요.");
+	            message.focus();
+	            return;
+	        }
+
+	        if (message.value.length > 300) {
+	            event.preventDefault();
+	            alert("메시지는 300자 이내로 작성해 주세요.");
+	            message.focus();
+	            return;
+	        }
+	    });
+	}
 	
-    if (submitButton) {
-        submitButton.addEventListener("click", function () {
-            if (!message.value.trim()) {
-                alert("보낼 한 마디를 입력해 주세요.");
-                message.focus();
-                return;
-            }
-
-            if (message.value.length > 300) {
-                alert("메시지는 300자 이내로 작성해 주세요.");
-                return;
-            }
-        });
-    }
-
     updateCount();
 });
