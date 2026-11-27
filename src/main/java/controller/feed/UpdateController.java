@@ -6,7 +6,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import controller.Controller;
 import model.dao.PostManager;
 import model.dto.PostDTO;
-import util.SessionUtil;
 
 public class UpdateController implements Controller {
 
