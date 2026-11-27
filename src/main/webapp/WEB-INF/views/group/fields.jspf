@@ -1,0 +1,2 @@
+<input type="hidden" name="csrf" value="<c:out value='${csrf}'/>">
+<input type="hidden" name="groupId" value="<c:out value='${groupPage.group.groupId}'/>">

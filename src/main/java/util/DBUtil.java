@@ -10,7 +10,7 @@ public class DBUtil {
     static final String DRIVER = "oracle.jdbc.driver.OracleDriver";
     static final String URL = "jdbc:oracle:thin:@dblab.dongduk.ac.kr:1521/orclpdb";
     static final String USER = "dbp260105";
-    static final String PASSWD = "122913";
+    static final String PASSWD = System.getenv().getOrDefault("ROOMMATE_DB_PASSWORD", "");
 
     static {
         // JDBC 드라이버 로딩

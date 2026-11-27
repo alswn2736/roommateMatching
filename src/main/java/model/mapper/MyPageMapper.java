@@ -25,6 +25,8 @@ public interface MyPageMapper {
 
     List<ApplicantDTO> selectApplicantsByPost(int postId);
 
+    Integer lockPost(int postId);
+
     int increaseAcceptedCount(int postId);
 
     int updatePostStatus(@Param("postId") int postId, @Param("status") String status);

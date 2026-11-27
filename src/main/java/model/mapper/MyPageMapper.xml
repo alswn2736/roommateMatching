@@ -53,6 +53,10 @@
         UPDATE post SET acceptedcount = NVL(acceptedcount, 0) + 1 WHERE postid = #{postId}
     </update>
 
+    <select id="lockPost" resultType="int">
+        SELECT postid FROM post WHERE postid = #{postId} FOR UPDATE
+    </select>
+
     <update id="updatePostStatus">
         UPDATE post SET status = #{status} WHERE postid = #{postId}
     </update>
