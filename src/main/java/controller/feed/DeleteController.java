@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import controller.Controller;
 import model.dao.PostManager;
-import util.SessionUtil;
 
 public class DeleteController implements Controller {
 
