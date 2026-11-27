@@ -8,6 +8,7 @@ import model.domain.User;
 import model.dto.UserDTO;
 import model.util.auth.AuthDBUtil;
 import model.util.auth.PasswordUtil;
+import java.nio.charset.StandardCharsets;
 
 //회원가입, 로그인, 프로필 설정을 처리하는 Manager 클래스
 public class UserService {
@@ -180,9 +181,11 @@ public class UserService {
 
     private void checkLength(String value, int max, String label) {
 
-        if (value != null && value.length() > max) {
+        if (value != null &&
+                value.getBytes(StandardCharsets.UTF_8).length > max) {
+
             throw new IllegalArgumentException(
-                    label + "의 최대 길이를 초과했습니다.");
+                    label + "은(는) " + max + "BYTE 이하로 입력해주세요.");
         }
     }
 }

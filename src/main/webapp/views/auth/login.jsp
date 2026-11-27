@@ -59,7 +59,7 @@
 							<label for="password" class="form-label">비밀번호</label>
 							<div class="password-wrapper">
 								<input type="password" class="form-control login-input"
-									id="password" name="password" required>
+									id="password" name="password" placeholder="••••••••" required>
 
 								<button type="button" class="password-toggle"
 									id="passwordToggle" aria-label="비밀번호 표시">
