@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import controller.Controller;
 import model.dao.PostManager;
 import model.dto.PostDTO;
-import util.SessionUtil;
 
 public class FeedController implements Controller {
     
@@ -30,10 +29,6 @@ public class FeedController implements Controller {
         List<PostDTO> postList = manager.findPostList(keyword, smoking, sleepTime, sensitivity, airCon, clean, sort);
         request.setAttribute("postList", postList);
         request.setAttribute("postCount", postList.size());
-        
-        // 로그인한 사용자 학번
-        Integer loginStudentId = SessionUtil.getLoginStudentId(request);
-        request.setAttribute("loginStudentId", loginStudentId);
         
         return "/views/feed/feed.jsp";
     }
