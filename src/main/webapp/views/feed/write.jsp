@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <div class="modalOverlay" id="writeModalOverlay" hidden>
     <section class="writeModal" role="dialog" aria-modal="true" aria-labelledby="writeModalTitle">
@@ -14,32 +14,33 @@
             </button>
         </div>
 
-        <form id="writeForm">
+        <form id="writeForm"
+        	action="${pageContext.request.contextPath}/app/feed/write"
+      		method="post">
+      		<input type="hidden" name="postId" id="writePostId">
             
             <div class="writeField">
                 <label for="recruitTitle">모집글 제목</label>
                 <input type="text" id="recruitTitle" name="title" class="form-control"
-                	maxlength="100" placeholder="새 학기 기숙사 같이 쓸 동갑내기 구해요 (학과, 성향 요약)" required>
+                	maxlength="100" placeholder="새 학기 기숙사 같이 쓸 동갑내기 구해요 (학과, 성향 요약)"
+                	value="${post.title}" required>
             </div>
             
             <div class="writeField">
                 <span class="writeLabel">희망 방 유형</span>
 
                 <div class="roomTypeOptions">
-
-                    <label class="roomTypeOption selected">
-                        <input type="radio" name="roomType"
-                               value="기숙사 2인실" checked>
-                        <span>기숙사 2인실</span>
-                    </label>
-
-                    <label class="roomTypeOption">
-                        <input type="radio" name="roomType"
-                               value="기숙사 4인실">
-                        <span>기숙사 4인실</span>
-                    </label>
-
-                </div>
+				    <label class="roomTypeOption selected">
+				        <input type="radio" name="roomType"
+				               value="DOUBLE" ${post.roomType == 'DOUBLE' ? 'checked' : ''}>
+				        <span>기숙사 2인실</span>
+				    </label>
+				    <label class="roomTypeOption">
+				        <input type="radio" name="roomType"
+				               value="QUAD" ${post.roomType == 'QUAD' ? 'checked' : ''}>
+				        <span>기숙사 4인실</span>
+				    </label>
+				</div>
             </div>
 
             
@@ -50,42 +51,42 @@
 
                 <div class="habitTags">
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="아침형" checked>
+					    <input type="checkbox" name="habits" value="아침형" ${post.kwSleepTime == 'M' ? 'checked' : ''}>
 					    <span># 아침형(얼리버드)</span>
 					</label>
 					
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="저녁형">
+					    <input type="checkbox" name="habits" value="저녁형" ${post.kwSleepTime == 'E' ? 'checked' : ''}>
 					    <span># 저녁형(올빼미)</span>
 					</label>
 					
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="비흡연자" checked>
+					    <input type="checkbox" name="habits" value="비흡연자" ${post.kwSmoking == 'N' ? 'checked' : ''}>
 					    <span># 비흡연자</span>
 					</label>
 					
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="흡연 가능">
+					    <input type="checkbox" name="habits" value="흡연 가능" ${post.kwSmoking == 'Y' ? 'checked' : ''}>
 					    <span># 흡연 가능</span>
 					</label>
 					
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="조용한 편" checked>
+					    <input type="checkbox" name="habits" value="조용한 편" ${post.kwSensitivity == 'Q' ? 'checked' : ''}>
 					    <span># 조용한 편</span>
 					</label>
 					
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="사교적" checked>
+					    <input type="checkbox" name="habits" value="사교적" ${post.kwSensitivity == 'S' ? 'checked' : ''}>
 					    <span># 사교적</span>
 					</label>
 					
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="에어컨 빵빵">
+					    <input type="checkbox" name="habits" value="에어컨 빵빵" ${post.kwAirCon == 'Y' ? 'checked' : ''}>
 					    <span># 에어컨 빵빵</span>
 					</label>
 					
 					<label class="habitTag">
-					    <input type="checkbox" name="habits" value="위생청결 철저" checked>
+					    <input type="checkbox" name="habits" value="위생청결 철저" ${post.kwClean == 'Y' ? 'checked' : ''}>
 					    <span># 위생청결 철저</span>
 					</label>
                 </div>
@@ -104,17 +105,26 @@
 			          placeholder="메이트를 찾는 다른 학우들에게 내 생활 습관과 수면 패턴, 원하는 상대의 취향에 대해 자세히 작성해 주세요.
 			
 예: 잠귀가 어두우신 분이 편해요, 주말에는 거의 고향 내려갑니다!"
-			          required></textarea>
+			          required>${post.content}</textarea>
             </div>
             
             <div class="writeModalActions">
-			    <button type="button" id="cancelWriteModal" class="btn writeCancelButton">
-			        취소
+			    <button type="button" id="deletePostButton"
+			            class="btn writeDeleteButton" hidden>
+			        삭제하기
 			    </button>
 			
-			    <button type="submit" class="btn writeSubmitButton">
-			        모집글 등록하기
-			    </button>
+			    <div class="writeModalRightActions">
+			        <button type="button" id="cancelWriteModal"
+			                class="btn writeCancelButton">
+			            취소
+			        </button>
+			
+			        <button type="submit" id="writeSubmitButton"
+			                class="btn writeSubmitButton">
+			            모집글 등록하기
+			        </button>
+			    </div>
 			</div>
 
         </form>

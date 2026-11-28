@@ -199,8 +199,33 @@
 
 .writeModalActions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     gap: 12px;
+}
+
+.writeModalRightActions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.writeDeleteButton {
+    min-height: 42px;
+    padding: 0 24px;
+    border: 1px solid #DC5365;
+    border-radius: 9px;
+    background: #FFFFFF;
+    color: #DC5365;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.writeDeleteButton:hover {
+    background: #DC5365;
+    color: #FFFFFF;
 }
 
 .writeCancelButton,
