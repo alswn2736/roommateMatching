@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -24,251 +25,240 @@
     <jsp:include page="/views/common/header.jsp" />
 
     <main class="feedPage">
-		<aside class="filterPanel">
-		    <div class="filterSection">
-		        <label for="keywordSearch">키워드 검색</label>
+		<form id="feedForm" action="${pageContext.request.contextPath}/app/feed" method="get">
+		    <aside class="filterPanel">
 		
-		        <div class="searchInputWrap">
-		            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-		                <path d="M14.0001 14.0001L11.1068 11.1068M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke-width="2" stroke-linecap="round" stroke="#7C6F72"/>
-		            </svg>
+		        <div class="filterSection">
+		            <label for="keywordSearch">키워드 검색</label>
+		            <div class="searchInputWrap">
+		                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+		                    <path d="M14.0001 14.0001L11.1068 11.1068M12.6667 7.33333C12.6667 10.2789 10.2789 12.6667 7.33333 12.6667C4.38781 12.6667 2 10.2789 2 7.33333C2 4.38781 4.38781 2 7.33333 2C10.2789 2 12.6667 4.38781 12.6667 7.33333Z" stroke-width="2" stroke-linecap="round" stroke="#7C6F72"/>
+		                </svg>
 		
-		            <input type="text" id="keywordSearch"
-			           class="form-control"
-			           placeholder="키워드를 입력하세요">
+		                <input type="text" id="keywordSearch"
+		                       name="keyword"
+		                       class="form-control"
+		                       placeholder="키워드를 입력하세요"
+		                       value="${param.keyword}">
+		            </div>
 		        </div>
-		    </div>
 		
-		    <hr class="filterDivider">
+		        <hr class="filterDivider">
 		
-		    <div class="filterSection">
-		        <p class="filterHeading">흡연 여부</p>
+		        <div class="filterSection">
+		            <p class="filterHeading">흡연 여부</p>
 		
-		        <label class="filterOption">
-			        <input type="checkbox" class="form-check-input"
-	           			name="smoking" value="비흡연" checked>
-		            <span>비흡연자 선호</span>
-		        </label>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="smoking" value="N"
+		                       ${fn:contains(fn:join(paramValues.smoking, ','), 'N') ? 'checked' : ''}>
+		                <span>비흡연자 선호</span>
+		            </label>
 		
-		        <label class="filterOption">
-		            <input type="checkbox" class="form-check-input"
-	           			name="smoking" value="흡연가능">
-		            <span>흡연 가능자 선호</span>
-		        </label>
-		    </div>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="smoking" value="Y"
+		                       ${fn:contains(fn:join(paramValues.smoking, ','), 'Y') ? 'checked' : ''}>
+		                <span>흡연 가능자 선호</span>
+		            </label>
+		        </div>
 		
-		    <hr class="filterDivider">
+		        <hr class="filterDivider">
 		
-		    <div class="filterSection">
-		        <p class="filterHeading">생활 패턴</p>
+		        <div class="filterSection">
+		            <p class="filterHeading">생활 패턴</p>
 		
-		        <label class="filterOption">
-					<input type="checkbox" class="form-check-input"
-	           			name="habit" value="아침형" checked>
-		            <span>아침형 인간 (얼리버드)</span>
-		        </label>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="sleepTime" value="M"
+		                       ${fn:contains(fn:join(paramValues.sleepTime, ','), 'M') ? 'checked' : ''}>
+		                <span>아침형 (얼리버드)</span>
+		            </label>
 		
-		        <label class="filterOption">
-					<input type="checkbox" class="form-check-input"
-	           			name="habit" value="저녁형">
-		            <span>저녁형 인간 (올빼미)</span>
-		        </label>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="sleepTime" value="E"
+		                       ${fn:contains(fn:join(paramValues.sleepTime, ','), 'E') ? 'checked' : ''}>
+		                <span>저녁형 (올빼미)</span>
+		            </label>
+		        </div>
 		
-		        <label class="filterOption">
-					<input type="checkbox" class="form-check-input"
-	           			name="habit" value="상관없음">
-		            <span>상관 없음</span>
-		        </label>
-		    </div>
+		        <hr class="filterDivider">
 		
-		    <hr class="filterDivider">
+		        <div class="filterSection">
+		            <p class="filterHeading">성격 / 성향</p>
 		
-		    <div class="filterSection">
-		        <p class="filterHeading">성격 / 성향</p>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="sensitivity" value="Q"
+		                       ${fn:contains(fn:join(paramValues.sensitivity, ','), 'Q') ? 'checked' : ''}>
+		                <span>조용한 편</span>
+		            </label>
 		
-		        <label class="filterOption">
-					<input type="checkbox" class="form-check-input"
-	           			name="personality" value="조용한편" checked>
-		            <span>조용한 편</span>
-		        </label>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="sensitivity" value="S"
+		                       ${fn:contains(fn:join(paramValues.sensitivity, ','), 'S') ? 'checked' : ''}>
+		                <span>사교적인 편</span>
+		            </label>
 		
-		        <label class="filterOption">
-		            <input type="checkbox" class="form-check-input"
-	           			name="personality" value="활발하고 외향적">
-		            <span>활발하고 외향적</span>
-		        </label>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="airCon" value="Y"
+		                       ${param.airCon == 'Y' ? 'checked' : ''}>
+		                <span>에어컨 빵빵</span>
+		            </label>
 		
-		        <label class="filterOption">
-		        	<input type="checkbox" class="form-check-input"
-	           			name="personality" value="개인 생활 존중">
-		            <span>개인 생활 존중</span>
-		        </label>
+		            <label class="filterOption">
+		                <input type="checkbox" class="form-check-input"
+		                       name="clean" value="Y"
+		                       ${param.clean == 'Y' ? 'checked' : ''}>
+		                <span>위생청결 철저</span>
+		            </label>
+		        </div>
 		
-		        <label class="filterOption">
-					<input type="checkbox" class="form-check-input"
-	           			name="personality" value="사교적인 메이트">
-		            <span>사교적인 메이트</span>
-		        </label>
-		    </div>
+		        <button type="submit" id="applyFilters" class="filterButton">
+		            필터 적용하기
+		        </button>
 		
-		    <button type="button" id="applyFilters" class="filterButton">
-		        필터 적용하기
-		    </button>
-		
-		</aside>
+		    </aside>
+		</form>
 		
 		
         <section class="feedContent">
             <div class="feedToolbar">
                 <h2>
                     전체 모집글
-                    <span id="postCount">48</span>개
+                    <span id="postCount">${postCount}</span>개
                 </h2>
 
                 <div class="toolbarActions">
 
-                    <select id="sortPosts" class="form-select" aria-label="모집글 정렬">
-					    <option value="latest">최신순</option>
-					    <option value="oldest">오래된순</option>
+                    <select id="sortPosts" name="sort" form="feedForm" class="form-select" aria-label="모집글 정렬" onchange="this.form.submit()">
+					    <option value="latest" ${param.sort == 'oldest' ? '' : 'selected'}>최신순</option>
+					    <option value="oldest" ${param.sort == 'oldest' ? 'selected' : ''}>오래된순</option>
 					</select>
 
-                    <button type="button" id="openWriteModal"
-					        class="btn writeButton">
+                    <button type="button" id="openWriteModal"  class="btn writeButton">
 					    방 찾기 글쓰기
 					</button>
 
                 </div>
             </div>
             
+            <c:if test="${not empty sessionScope.applyMessage}">
+				<script>
+			        alert("${sessionScope.applyMessage}");
+			    </script>
+			    <c:remove var="applyMessage" scope="session" />
+			</c:if>
             
-            <div class="postList" id="postList">
+			<div class="postList" id="postList">
+				<c:forEach var="post" items="${postList}">
+					<article class="postCard"
+							data-id="${post.postId}"
+							data-writer-id="${post.writerId}"
+							data-title="${post.title}"
+							data-room="${post.roomType == 'DOUBLE' ? '2인실' : '4인실'}"
+							data-room-type="${post.roomType}"
+							data-kw-smoking="${post.kwSmoking}"
+							data-kw-sleeptime="${post.kwSleepTime}"
+							data-kw-sensitivity="${post.kwSensitivity}"
+							data-kw-aircon="${post.kwAirCon}"
+							data-kw-clean="${post.kwClean}"
+							data-capacity="${post.capacity}"
+			                data-smoking="${post.kwSmoking == 'Y' ? '흡연가능' : (post.kwSmoking == 'N' ? '비흡연' : '')}"
+			                data-habits="${post.kwSleepTime == 'M' ? '아침형' : (post.kwSleepTime == 'E' ? '저녁형' : '')} 
+			                		${post.kwSensitivity == 'Q' ? '조용한편' : (post.kwSensitivity == 'S' ? '사교적인편' : '')} 
+			                		${post.kwAirCon == 'Y' ? '에어컨빵빵' : ''} ${post.kwClean == 'Y' ? '위생청결철저' : ''}"
+			                data-date="${post.createAt.time}"
+			                data-content="${post.content}"
+			                data-nickname="${post.nickname}"
+			                data-major="${post.major}"
+							data-studentid="${post.studentId}"
+							data-profile="${post.profileImg}"
+							data-author-info="${fn:substring(post.studentId, 2, 4)}학번">
+							
+						<button type="button" class="editPostButton">
+						    수정
+						</button>
+						
+			            <div class="avatar">
+						    <c:choose>
+						        <c:when test="${not empty post.profileImg}">
+						            <img src="${post.profileImg}" alt="프로필 이미지">
+						        </c:when>
+						        <c:otherwise>
+						            <span>룸</span>
+						        </c:otherwise>
+						    </c:choose>
+						</div>
+			
+			            <div class="postInfo">
+			                <div class="postTop">
+								
+			                    <span class="roomBadge">기숙사 ${post.roomType == 'DOUBLE' ? '2인실' : '4인실'}</span>
+			
+			                    <c:if test="${post.kwSmoking == 'Y'}">
+			                        <span class="postDate">흡연</span>
+			                    </c:if>
+			
+			                    <c:if test="${post.kwSmoking == 'N'}">
+			                        <span class="postDate">비흡연</span>
+			                    </c:if>
+			                </div>
+			
+			                <h3>${post.title}</h3>
+			
+			                <div class="postTags">
+			                    <c:if test="${post.kwSleepTime == 'M'}">
+			                        <span>#아침형</span>
+			                    </c:if>
+			
+			                    <c:if test="${post.kwSleepTime == 'E'}">
+			                        <span>#저녁형</span>
+			                    </c:if>
+			
+			                    <c:if test="${post.kwSensitivity == 'Q'}">
+			                        <span>#조용한 편</span>
+			                    </c:if>
+			
+			                    <c:if test="${post.kwSensitivity == 'S'}">
+			                        <span>#사교적인 편</span>
+			                    </c:if>
+			
+			                    <c:if test="${post.kwAirCon == 'Y'}">
+			                        <span>#에어컨 빵빵</span>
+			                    </c:if>
+			
+			                    <c:if test="${post.kwClean == 'Y'}">
+			                        <span>#위생청결 철저</span>
+			                    </c:if>
+			                </div>
+			
+			                <!-- detail 사용할 게시글 내용 -->
+			                <div class="postDescription" hidden>
+			                    <c:out value="${post.content}" />
+			                </div>
+			
+			                <div class="postBottom">
+			                    <span>
+			                        모집 인원: ${post.capacity}명
+			                        | 등록일: <span class="relativeDate"></span>
+			                    </span>
+			                    
+			                    <span class="postAuthor">
+							        <strong>
+							            <c:out value="${post.nickname}" default="익명" />
+							        </strong>
+							        (<c:out value="${fn:substring(post.studentId, 2, 4)}" />학번)
+							    </span>
+			                </div>
+			            </div>
+			        </article>
+			    </c:forEach>
+			</div>
 
-                <article class="postCard"
-                         data-id="1"
-                         data-title="아침형 룸메 구해요, 비흡연만요"
-                         data-room="기숙사 2인실"
-                         data-smoking="비흡연"
-                         data-habits="아침형 청결 조용한편"
-                         data-date="3"
-                         data-author="얼리버드"
-                         data-author-info="컴퓨터공학과 · 20학번"
-                         data-avatar="얼">
-
-                    <div class="avatar">
-					    <img src="${pageContext.request.contextPath}/assets/image/feed/kim.jpg" alt="얼리버드 프로필">
-					</div>
-
-                    <div class="postInfo">
-
-                        <div class="postTop">
-                            <span class="roomBadge">2인실 희망</span>
-                            <span class="postDate">비흡연</span>
-                        </div>
-
-                        <h3>
-                            새 학기 기숙사 2인실 같이 쓸 동갑내기 룸메이트 구합니다!
-                        </h3>
-
-                        <div class="postTags">
-                            <span>#컴공</span>
-                            <span>#저녁형</span>
-                            <span>#사교적</span>
-                            <span>#에어컨 프리</span>
-                        </div>
-
-                        <div class="postBottom">
-                            <span>모집 인원: 1명 | 등록일: 2시간 전</span>
-                            <span>김민재 (20학번)</span>
-                        </div>
-
-                    </div>
-                </article>
-
-                <article class="postCard"
-                         data-id="2"
-                         data-title="생활 패턴 잘 맞는 조용한 경영학과 룸메 한 명 급히 찾아요"
-                         data-room="기숙사 3인실"
-                         data-smoking="비흡연"
-                         data-habits="아침형 청결 조용한편"
-                         data-date="2"
-                         data-author="이주형"
-                         data-author-info="경영학과 · 19학번"
-                         data-avatar="이">
-
-                    <div class="avatar">
-					    <img src="${pageContext.request.contextPath}/assets/image/feed/lee.jpg" alt="얼리버드 프로필">
-					</div>
-
-                    <div class="postInfo">
-
-                        <div class="postTop">
-                            <span class="roomBadge">3인실 희망</span>
-                            <span class="postDate">비흡연</span>
-                            <span class="postDate">얼리버드</span>
-                        </div>
-
-                        <h3>
-                            생활 패턴 잘 맞는 조용한 경영학과 룸메 한 명 급히 찾아요
-                        </h3>
-
-                        <div class="postTags">
-                            <span>#경영</span>
-                            <span>#아침형</span>
-                            <span>#조용한 편</span>
-                            <span>#깔끔한 정리</span>
-                        </div>
-
-                        <div class="postBottom">
-                            <span>모집 인원: 1명 | 등록일: 1일 전</span>
-                            <span>이주형 (19학번)</span>
-                        </div>
-
-                    </div>
-                </article>
-
-                <article class="postCard"
-                         data-id="3"
-                         data-title="디자인과 야작 많은 편이라 서로 터치 안 하는 룸메 구해요"
-                         data-room="기숙사 2인실"
-                         data-smoking="비흡연"
-                         data-habits="저녁형 청결 개인생활존중"
-                         data-date="1"
-                         data-author="박서연"
-                         data-author-info="산업디자인과 · 21학번"
-                         data-avatar="박">
-
-                    <div class="avatar">
-					    <img src="${pageContext.request.contextPath}/assets/image/feed/park.jpg" alt="얼리버드 프로필">
-					</div>
-
-                    <div class="postInfo">
-
-                        <div class="postTop">
-                            <span class="roomBadge">2인실 희망</span>
-                            <span class="postDate">흡연 안됨</span>
-                            <span class="postDate">개인주의</span>
-                        </div>
-
-                        <h3>
-                            디자인과 야작 많은 편이라 서로 터치 안 하는 룸메 구해요
-                        </h3>
-
-                        <div class="postTags">
-                            <span>#산업디자인</span>
-                            <span>#새벽형</span>
-                            <span>#개인생활</span>
-                            <span>#터치없음</span>
-                        </div>
-
-                        <div class="postBottom">
-                            <span>모집 인원: 1명 | 등록일: 3일 전</span>
-                            <span>박서연 (21학번)</span>
-                        </div>
-
-                    </div>
-                </article>
-
-            </div>
             
             <p id="emptyMessage" class="emptyMessage" hidden>
                 조건에 맞는 모집글이 없습니다.
