@@ -11,7 +11,7 @@
             btn.disabled = true;
             fetch(ctx + '/mypage/matched/leave', {
                 method: 'POST',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-Token': document.body.dataset.groupCsrf || '' },
                 body: new URLSearchParams({ groupId: btn.dataset.groupId, reason: reason })
             })
                 .then(function (res) {

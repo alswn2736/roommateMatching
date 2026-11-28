@@ -10,7 +10,7 @@
 <title>Matching Information</title>
 </head>
 
-<body data-ctx="${pageContext.request.contextPath}">
+<body data-ctx="${pageContext.request.contextPath}" data-group-csrf="<c:out value='${groupCsrf}'/>">
      <%@ include file = "/views/common/header.jsp" %>
      <div class="mainLayout">
         <%@ include file = "/views/mypage/mypage_leftsidebar.jsp" %>

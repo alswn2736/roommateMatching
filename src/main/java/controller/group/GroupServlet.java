@@ -1,11 +1,8 @@
 package controller.group;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.SecureRandom;
 import java.sql.SQLException;
-import java.util.Base64;
+import util.GroupCsrf;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -72,22 +69,11 @@ public class GroupServlet extends HttpServlet {
     }
 
     private String csrf(HttpSession session) {
-        synchronized (session) {
-            String token = (String)session.getAttribute("group.csrf");
-            if (token == null) {
-                byte[] bytes = new byte[32];
-                new SecureRandom().nextBytes(bytes);
-                token = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
-                session.setAttribute("group.csrf", token);
-            }
-            return token;
-        }
+        return GroupCsrf.token(session);
     }
 
     private void checkCsrf(HttpServletRequest req) {
-        String expected = (String) req.getSession(false).getAttribute("group.csrf");
-        String actual = req.getParameter("csrf");
-        if (expected == null || actual == null || !MessageDigest.isEqual(expected.getBytes(StandardCharsets.UTF_8), actual.getBytes(StandardCharsets.UTF_8))) {
+        if (!GroupCsrf.isValid(req)) {
             throw new GroupException(403, "요청 확인에 실패했습니다. 화면을 새로고침해 주세요.");
         }
     }

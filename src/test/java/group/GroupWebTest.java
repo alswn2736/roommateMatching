@@ -1,6 +1,7 @@
 package group;
 
 import controller.group.GroupServlet;
+import controller.FrontController;
 import jakarta.servlet.http.*;
 import model.dto.UserDTO;
 import model.domain.User;
@@ -49,6 +50,8 @@ class GroupWebTest {
         ctx.setParentClassLoader(getClass().getClassLoader());
         ((StandardJarScanner)ctx.getJarScanner()).setScanClassPath(false);
         ctx.getServletContext().setAttribute("group.service",db.service);
+        Tomcat.addServlet(ctx, "mypage-test", new FrontController());
+        ctx.addServletMappingDecoded("/mypage/*", "mypage-test");
         Tomcat.addServlet(ctx,"group-test",new GroupServlet());
         for(String path:new String[]{"/app/group","/app/group/list","/app/matched","/app/group/role","/app/group/rule","/app/group/rule/agree","/app/group/leave","/app/group/leave/consent"})ctx.addServletMappingDecoded(path,"group-test");
         Tomcat.addServlet(ctx,"test-login",new HttpServlet() {
@@ -78,6 +81,25 @@ class GroupWebTest {
             assertEquals(200,get(first,base+"/app/matched").statusCode());
             HttpResponse<String> page=get(first,base+"/app/group?groupId=100&month=2026-11");
             assertEquals(200,page.statusCode(),page.body());assertTrue(page.body().contains("우리 그룹"));String csrf=token(page);
+            // 실제 FrontController가 DB 변경 전에 세 경로의 위조 요청을 거절한다.
+            for (String path : new String[]{"/mypage/matched/leave", "/mypage/applicants/accept", "/mypage/applicants/reject"}) {
+                assertEquals(403, post(first, base + path, "bad", "groupId", "0", "applyId", "0").statusCode());
+                HttpResponse<String> missing = first.send(HttpRequest.newBuilder(URI.create(base + path))
+                        .header("Content-Type", "application/x-www-form-urlencoded")
+                        .POST(HttpRequest.BodyPublishers.ofString("groupId=0&applyId=0")).build(),
+                        HttpResponse.BodyHandlers.ofString());
+                assertEquals(403, missing.statusCode());
+                assertEquals(403, post(second, base + path, csrf, "groupId", "0", "applyId", "0").statusCode());
+                // 유효한 AJAX 토큰은 통과하고, 이후 잘못된 ID에 대한 입력 검사가 실행된다.
+                HttpResponse<String> valid = first.send(HttpRequest.newBuilder(URI.create(base + path))
+                        .header("X-CSRF-Token", csrf)
+                        .header("Content-Type", "application/x-www-form-urlencoded")
+                        .POST(HttpRequest.BodyPublishers.ofString("groupId=0&applyId=0")).build(),
+                        HttpResponse.BodyHandlers.ofString());
+                assertEquals(400, valid.statusCode());
+                assertTrue(valid.body().contains("잘못된 요청"));
+            }
+            assertEquals(0, db.count("SELECT COUNT(*) FROM leavegroup"));
             assertTrue(page.body().contains("역할 내용</label>"));
             assertTrue(page.body().contains("퇴실 사유 (선택)</label>"));
             assertTrue(page.body().contains("퇴실 요청 보내기</button>"));
