@@ -7,19 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import model.service.group.GroupService;
+import model.group.GroupException;
 
 import model.dao.ApplyDAO;
 import model.dao.ChatDAO;
-import model.dao.GroupDAO;
-import model.dao.GroupMemberDAO;
-import model.dao.LeaveGroupDAO;
 import model.dao.PostDAO;
 import model.dao.UserDAO;
 import model.dto.ApplyDTO;
 import model.dto.ChatDTO;
 import model.dto.GroupDTO;
-import model.dto.GroupMemberDTO;
-import model.dto.LeaveGroupDTO;
 import model.dto.PostDTO;
 import model.dto.UserDTO;
 import model.dto.mypage.ApplicantDTO;
@@ -40,17 +38,32 @@ public class MyPageService {
 
     private static final MyPageService instance = new MyPageService();
 
-    public static final String LEAVE_PENDING = "PENDING";
     public static final int CHAT_MAX_LENGTH = 1000;
 
     private final ApplyDAO applyDAO = new ApplyDAO();
     private final ChatDAO chatDAO = new ChatDAO();
     private final PostDAO postDAO = new PostDAO();
-    private final GroupDAO groupDAO = new GroupDAO();
-    private final GroupMemberDAO groupMemberDAO = new GroupMemberDAO();
-    private final LeaveGroupDAO leaveGroupDAO = new LeaveGroupDAO();
 
-    private MyPageService() {}
+    private final SqlSessionFactory factory;
+
+    private MyPageService() {
+        factory = null;
+    }
+
+    public MyPageService(SqlSessionFactory factory) {
+        this.factory = factory;
+    }
+
+    private SqlSessionFactory getFactory() {
+        if (factory != null) {
+            return factory;
+        }
+        return MyBatisUtil.getFactory();
+    }
+
+    private SqlSession openSession() {
+        return getFactory().openSession(false);
+    }
 
     public static MyPageService getInstance() {
         return instance;
@@ -62,7 +75,7 @@ public class MyPageService {
 
     /** 로그인 사용자 정보 (비밀번호 제외) */
     public ProfileView getMe(int studentId) throws SQLException, UserNotFoundException {
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             UserDTO user = new UserDAO(session.getConnection()).selectById(studentId);
             if (user == null) {
                 throw new UserNotFoundException(studentId + "는 존재하지 않은 학번입니다.");
@@ -79,7 +92,7 @@ public class MyPageService {
         if (!"namePublic".equals(field) && !"studentIdPublic".equals(field) && !"majorPublic".equals(field)) {
             throw new MyPageException("변경할 수 없는 항목입니다.");
         }
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             int n = session.getMapper(MyPageMapper.class).updateVisibility(studentId, field, open ? "Y" : "N");
             if (n == 0) {
                 throw new MyPageException("사용자 정보를 찾을 수 없습니다.");
@@ -89,7 +102,7 @@ public class MyPageService {
     }
 
     public void updateProfileImg(int studentId, String imgPath) throws SQLException, MyPageException {
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             UserDAO userDAO = new UserDAO(session.getConnection());
             if (userDAO.updateProfileImg(studentId, imgPath) == 0) {
                 throw new MyPageException("사용자 정보를 찾을 수 없습니다.");
@@ -112,7 +125,7 @@ public class MyPageService {
         if (!newPw.equals(confirmPw)) {
             throw new MyPageException("비밀번호 확인이 일치하지 않습니다.");
         }
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             // 로그인(auth)과 같은 방식으로 해시해서 저장해야 다음 로그인 때 비밀번호가 일치한다
             session.getMapper(MyPageMapper.class).updatePassword(studentId, PasswordUtil.hash(newPw));
             session.commit();
@@ -121,8 +134,13 @@ public class MyPageService {
 
     /** 회원 탈퇴: 관련 데이터를 FK 순서대로 정리한 뒤 users 삭제 (하나의 트랜잭션) */
     public void withdraw(int studentId) throws MyPageException {
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             MyPageMapper m = session.getMapper(MyPageMapper.class);
+            for (GroupDTO group : m.selectGroupsByStudent(studentId)) {
+                if (GroupDTO.ACTIVE.equals(group.getStatus())) {
+                    throw new MyPageException("활동 중인 그룹에서 퇴실한 뒤 회원 탈퇴를 진행해 주세요.");
+                }
+            }
             try {
                 m.deleteChatsOfUser(studentId);
                 m.deleteAppliesOfUser(studentId);
@@ -151,7 +169,7 @@ public class MyPageService {
 
     public List<MyPostDTO> getMyPosts(int writerId) {
         List<MyPostDTO> result = new ArrayList<MyPostDTO>();
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             MyPageMapper m = session.getMapper(MyPageMapper.class);
             for (PostDTO post : m.selectPostsByWriter(writerId)) {
                 result.add(new MyPostDTO(post, m.selectApplicantsByPost(post.getPostId())));
@@ -166,11 +184,11 @@ public class MyPageService {
      * @return 그룹이 생성되었으면 true
      */
     public boolean acceptApply(int me, int applyId) throws SQLException, MyPageException {
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             Connection conn = session.getConnection();
             MyPageMapper m = session.getMapper(MyPageMapper.class);
             try {
-                ApplyDTO apply = applyDAO.selectOne(conn, applyId);
+                ApplyDTO apply = lockApplication(conn, m, applyId);
                 PostDTO post = apply == null ? null : postDAO.getPost(conn, apply.getPostId());
                 if (apply == null || post == null || post.getWriterId() != me) {
                     throw new MyPageException("처리할 수 없는 신청입니다.");
@@ -190,7 +208,7 @@ public class MyPageService {
                 if (MyPostDTO.isFull(post)) {
                     m.updatePostStatus(post.getPostId(), MyPostDTO.CLOSED);
                     m.rejectPendingByPost(post.getPostId());
-                    createGroup(conn, m, post);
+                    createGroup(conn, post);
                     groupCreated = true;
                 }
                 session.commit(true);
@@ -202,7 +220,7 @@ public class MyPageService {
         }
     }
 
-    private void createGroup(Connection conn, MyPageMapper m, PostDTO post) throws SQLException {
+    private void createGroup(Connection conn, PostDTO post) throws SQLException {
         LocalDate today = LocalDate.now();
         int year = today.getYear();
         int month = today.getMonthValue();
@@ -214,21 +232,21 @@ public class MyPageService {
             if (month <= 2) year -= 1; // 1~2월은 전년도 2학기(겨울)로 본다
         }
 
-        int groupId = m.nextGroupId();
-        groupDAO.insert(conn, new GroupDTO(groupId, post.getCapacity(), year, semester, GroupDTO.ACTIVE));
+        new GroupService(getFactory()).createGroup(conn, post.getPostId(), year, semester);
+    }
 
-        groupMemberDAO.insert(conn, new GroupMemberDTO(groupId, post.getWriterId()));
-        for (Integer applicantId : m.selectAcceptedApplicantIds(post.getPostId())) {
-            if (applicantId != post.getWriterId()) {
-                groupMemberDAO.insert(conn, new GroupMemberDTO(groupId, applicantId));
-            }
+    private ApplyDTO lockApplication(Connection conn, MyPageMapper mapper, int applyId) throws SQLException {
+        ApplyDTO apply = applyDAO.selectOne(conn, applyId);
+        if (apply == null || mapper.lockPost(apply.getPostId()) == null) {
+            return null;
         }
+        return applyDAO.selectOne(conn, applyId);
     }
 
     public void rejectApply(int me, int applyId) throws SQLException, MyPageException {
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             Connection conn = session.getConnection();
-            ApplyDTO apply = applyDAO.selectOne(conn, applyId);
+            ApplyDTO apply = lockApplication(conn, session.getMapper(MyPageMapper.class), applyId);
             PostDTO post = apply == null ? null : postDAO.getPost(conn, apply.getPostId());
             if (apply == null || post == null || post.getWriterId() != me) {
                 throw new MyPageException("처리할 수 없는 신청입니다.");
@@ -261,7 +279,7 @@ public class MyPageService {
     }
 
     public List<ChatDTO> getChats(int me, int applyId, int afterMsgId) throws SQLException, MyPageException {
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             Connection conn = session.getConnection();
             checkChatAccess(conn, me, applyId);
             return chatDAO.selectAfter(conn, applyId, Math.max(afterMsgId, 0));
@@ -276,7 +294,7 @@ public class MyPageService {
         if (content.length() > CHAT_MAX_LENGTH) {
             throw new MyPageException("메시지는 " + CHAT_MAX_LENGTH + "자까지 보낼 수 있습니다.");
         }
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             Connection conn = session.getConnection();
             ApplyDTO apply = checkChatAccess(conn, me, applyId);
             if (ApplyDTO.REJECTED.equals(apply.getStatus())) {
@@ -298,7 +316,7 @@ public class MyPageService {
 
     public List<MyGroupDTO> getMyGroups(int me) {
         List<MyGroupDTO> result = new ArrayList<MyGroupDTO>();
-        try (SqlSession session = MyBatisUtil.openSession()) {
+        try (SqlSession session = openSession()) {
             MyPageMapper m = session.getMapper(MyPageMapper.class);
             for (GroupDTO g : m.selectGroupsByStudent(me)) {
                 MyGroupDTO dto = new MyGroupDTO();
@@ -322,36 +340,10 @@ public class MyPageService {
     }
 
     public void requestLeave(int me, int groupId, String reason) throws SQLException, MyPageException {
-        if (reason != null) {
-            reason = reason.trim();
-            if (reason.length() > 1000) {
-                throw new MyPageException("탈퇴 사유는 1000자까지 입력할 수 있습니다.");
-            }
-            if (reason.isEmpty()) reason = null;
-        }
-        try (SqlSession session = MyBatisUtil.openSession()) {
-            Connection conn = session.getConnection();
-            MyPageMapper m = session.getMapper(MyPageMapper.class);
-
-            if (m.countGroupMember(groupId, me) == 0) {
-                throw new MyPageException("소속된 그룹이 아닙니다.");
-            }
-            List<GroupDTO> groups = groupDAO.findByGroup(conn, (long) groupId);
-            if (groups.isEmpty() || !GroupDTO.ACTIVE.equalsIgnoreCase(groups.get(0).getStatus())) {
-                throw new MyPageException("이미 종료된 그룹입니다.");
-            }
-            if (m.countPendingLeave(groupId, me) > 0) {
-                throw new MyPageException("이미 탈퇴 요청을 보냈습니다. 룸메이트들의 동의를 기다려주세요.");
-            }
-
-            LeaveGroupDTO leave = new LeaveGroupDTO();
-            leave.setLeaveId(m.nextLeaveId());
-            leave.setGroupId(groupId);
-            leave.setRequesterId(me);
-            leave.setReason(reason);
-            leave.setStatus(LEAVE_PENDING);
-            leaveGroupDAO.insert(conn, leave);
-            session.commit(true);
+        try {
+            new GroupService(getFactory()).requestLeave(groupId, me, reason);
+        } catch (GroupException e) {
+            throw new MyPageException(e.getMessage());
         }
     }
 }

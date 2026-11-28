@@ -10,7 +10,7 @@
 <title>Matching Information</title>
 </head>
 
-<body data-ctx="${pageContext.request.contextPath}">
+<body data-ctx="${pageContext.request.contextPath}" data-group-csrf="<c:out value='${groupCsrf}'/>">
      <%@ include file = "/views/common/header.jsp" %>
      <div class="mainLayout">
         <%@ include file = "/views/mypage/mypage_leftsidebar.jsp" %>
@@ -71,6 +71,7 @@
                         </c:forEach>
                     </div>
                     <div class="dangerActionRow">
+                        <a href="${ctx}/app/group?groupId=${g.group.groupId}#leave">그룹 상세 및 퇴실 응답</a>
                         <span>* 성격 차이 및 생활습관 불일치 등 부득이한 사유 시 그룹 해체/탈퇴 신청을 보낼 수 있습니다.</span>
                         <c:choose>
                             <c:when test="${g.leavePending}">

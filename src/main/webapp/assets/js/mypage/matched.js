@@ -5,13 +5,13 @@
         btn.addEventListener('click', function () {
             if (!confirm('룸메이트 탈퇴 요청을 보낼까요?\n나를 제외한 룸메이트 전원이 동의해야 진행됩니다.')) return;
 
-            var reason = prompt('탈퇴 사유를 입력해주세요. (선택, 1000자 이내)', '');
+            var reason = prompt('탈퇴 사유를 입력해주세요. (선택, 300자 이내)', '');
             if (reason === null) return; // 취소
 
             btn.disabled = true;
             fetch(ctx + '/mypage/matched/leave', {
                 method: 'POST',
-                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+                headers: { 'X-Requested-With': 'XMLHttpRequest', 'X-CSRF-Token': document.body.dataset.groupCsrf || '' },
                 body: new URLSearchParams({ groupId: btn.dataset.groupId, reason: reason })
             })
                 .then(function (res) {

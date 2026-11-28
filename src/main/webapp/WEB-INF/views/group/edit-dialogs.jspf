@@ -1,0 +1,54 @@
+<%@ page pageEncoding="UTF-8" %>
+<dialog class="group-dialog" id="role-new" aria-labelledby="role-new-title">
+    <div class="dialog-heading"><h2 id="role-new-title">역할 추가</h2><button type="button" class="dialog-close" data-close aria-label="닫기">×</button></div>
+    <form method="post" action="${pageContext.request.contextPath}/app/group/role">
+        <%@ include file="fields.jspf" %>
+<label for="role-new-text">역할 내용</label>
+        <input id="role-new-text" name="roleTitle" required maxlength="100" value="" placeholder="예: 바닥 쓸기와 쓰레기 비우기" autofocus>
+        <label for="role-new-member">담당자</label>
+        <select id="role-new-member" name="assigneeId" required>
+            <c:forEach items="${groupPage.members}" var="m"><option value="${m.studentId}" ><c:out value="${m.nickname}"/></option></c:forEach>
+        </select>
+<div class="dialog-actions"><button type="button" class="button button-outline" data-close>취소</button><button class="button" name="action" value="save">저장</button></div>
+</form>
+</dialog>
+<c:forEach items="${groupPage.roles}" var="role">
+<dialog class="group-dialog" id="role-${role.roleId}" aria-labelledby="role-${role.roleId}-title">
+    <div class="dialog-heading"><h2 id="role-${role.roleId}-title">역할 수정</h2><button type="button" class="dialog-close" data-close aria-label="닫기">×</button></div>
+    <form method="post" action="${pageContext.request.contextPath}/app/group/role">
+        <%@ include file="fields.jspf" %>
+<input type="hidden" name="roleId" value="${role.roleId}">
+<label for="role-${role.roleId}-text">역할 내용</label>
+        <input id="role-${role.roleId}-text" name="roleTitle" required maxlength="100" value="<c:out value='${role.roleTitle}'/>" placeholder="예: 바닥 쓸기와 쓰레기 비우기" autofocus>
+        <label for="role-${role.roleId}-member">담당자</label>
+        <select id="role-${role.roleId}-member" name="assigneeId" required>
+            <c:forEach items="${groupPage.members}" var="m"><option value="${m.studentId}" ${m.studentId == role.assigneeId ? 'selected' : ''}><c:out value="${m.nickname}"/></option></c:forEach>
+        </select>
+<div class="dialog-actions"><button type="button" class="button button-outline" data-close>취소</button><button class="button" name="action" value="save">저장</button></div>
+<details class="delete-confirm"><summary>이 항목 삭제</summary><p>삭제한 항목은 되돌릴 수 없습니다.</p><button class="button button-danger" name="action" value="delete" formnovalidate>삭제 확인</button></details>
+</form>
+</dialog>
+</c:forEach>
+<dialog class="group-dialog" id="rule-new" aria-labelledby="rule-new-title">
+    <div class="dialog-heading"><h2 id="rule-new-title">규칙 추가</h2><button type="button" class="dialog-close" data-close aria-label="닫기">×</button></div>
+    <form method="post" action="${pageContext.request.contextPath}/app/group/rule">
+        <%@ include file="fields.jspf" %>
+<label for="rule-new-text">함께 지킬 약속</label>
+        <textarea id="rule-new-text" name="content" required maxlength="100" rows="3" placeholder="예: 밤 12시 이후에는 소음 줄이기" autofocus></textarea>
+<div class="dialog-actions"><button type="button" class="button button-outline" data-close>취소</button><button class="button" name="action" value="save">저장</button></div>
+</form>
+</dialog>
+<c:forEach items="${groupPage.rules}" var="rule">
+<dialog class="group-dialog" id="rule-${rule.ruleId}" aria-labelledby="rule-${rule.ruleId}-title">
+    <div class="dialog-heading"><h2 id="rule-${rule.ruleId}-title">규칙 수정</h2><button type="button" class="dialog-close" data-close aria-label="닫기">×</button></div>
+    <form method="post" action="${pageContext.request.contextPath}/app/group/rule">
+        <%@ include file="fields.jspf" %>
+<input type="hidden" name="ruleId" value="${rule.ruleId}">
+<label for="rule-${rule.ruleId}-text">함께 지킬 약속</label>
+        <textarea id="rule-${rule.ruleId}-text" name="content" required maxlength="100" rows="3" placeholder="예: 밤 12시 이후에는 소음 줄이기" autofocus><c:out value='${rule.content}'/></textarea>
+<p class="backend-muted">내용을 수정하면 구성원들이 다시 동의해야 합니다.</p>
+<div class="dialog-actions"><button type="button" class="button button-outline" data-close>취소</button><button class="button" name="action" value="save">저장</button></div>
+<details class="delete-confirm"><summary>이 항목 삭제</summary><p>삭제한 항목은 되돌릴 수 없습니다.</p><button class="button button-danger" name="action" value="delete" formnovalidate>삭제 확인</button></details>
+</form>
+</dialog>
+</c:forEach>

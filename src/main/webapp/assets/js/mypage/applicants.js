@@ -5,6 +5,7 @@
     // ===== 공통: 서버 요청 =====
     function request(method, url, params) {
         var opts = { method: method, headers: { 'X-Requested-With': 'XMLHttpRequest' } };
+        if (method === 'POST') opts.headers['X-CSRF-Token'] = document.body.dataset.groupCsrf || '';
         if (method === 'GET' && params) {
             url += '?' + new URLSearchParams(params).toString();
         } else if (params) {

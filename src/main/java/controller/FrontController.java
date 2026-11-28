@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import util.JsonUtil;
 import util.SessionUtil;
+import util.GroupCsrf;
 
 /**
  * 모든 요청을 받아 RequestMapping 에서 Command 를 찾아 실행하고,
@@ -77,6 +78,24 @@ public class FrontController extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
             return;
+        }
+
+        // 그룹 생성/퇴실은 그룹 화면과 같은 CSRF 검사로 보호한다.
+        boolean groupMutation = "POST".equals(request.getMethod())
+                && ("/mypage/matched/leave".equals(uri)
+                    || "/mypage/applicants/accept".equals(uri)
+                    || "/mypage/applicants/reject".equals(uri));
+        if (groupMutation && !GroupCsrf.isValid(request)) {
+            Map<String, Object> body = new HashMap<String, Object>();
+            body.put("ok", false);
+            body.put("message", "요청 확인에 실패했습니다. 화면을 새로고침해 주세요.");
+            JsonUtil.send(response, HttpServletResponse.SC_FORBIDDEN, body);
+            return;
+        }
+        if ("GET".equals(request.getMethod())
+                && ("/mypage/matched".equals(uri) || "/mypage/applicants".equals(uri))) {
+            response.setHeader("Cache-Control", "no-store");
+            request.setAttribute("groupCsrf", GroupCsrf.token(request.getSession()));
         }
 
         String result;

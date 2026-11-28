@@ -9,7 +9,7 @@
     <script defer src="${pageContext.request.contextPath}/assets/js/mypage/applicants.js"></script>
     <title>applicants</title>
     </head>
-    <body data-ctx="${pageContext.request.contextPath}">
+    <body data-ctx="${pageContext.request.contextPath}" data-group-csrf="<c:out value='${groupCsrf}'/>">
         <%@ include file = "/views/common/header.jsp" %>
         <div class="mainLayout">
             <%@ include file = "/views/mypage/mypage_leftsidebar.jsp" %>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="group">
+  <select id="listGroups" resultType="model.dto.GroupDTO">SELECT g.groupid, g.capacity, g.academicyear, g.semester, g.status FROM groups g JOIN group_member m ON m.groupid=g.groupid WHERE m.studentid=#{memberId} ORDER BY g.academicyear DESC,g.semester DESC,g.groupid</select>
+  <select id="lockGroup" resultType="model.dto.GroupDTO">SELECT groupid,capacity,academicyear,semester,status FROM groups WHERE groupid=#{groupId} FOR UPDATE</select>
+  <select id="members" resultType="model.group.GroupMemberView">SELECT m.studentid, COALESCE(u.nickname, '룸메이트') AS nickname FROM group_member m JOIN users u ON u.studentid=m.studentid WHERE m.groupid=#{groupId} ORDER BY m.studentid</select>
+  <select id="memberCount" resultType="int">SELECT COUNT(*) FROM group_member WHERE groupid=#{groupId} AND studentid=#{memberId}</select>
+  <select id="title" resultType="string">SELECT title FROM post WHERE postid=#{groupId}</select>
+  <select id="pendingCount" resultType="int">SELECT COUNT(*) FROM leavegroup WHERE groupid=#{groupId} AND status='PENDING'</select>
+  <select id="leaveRequest" resultType="model.dto.LeaveGroupDTO">SELECT leaveid,groupid,requesterid,reason,status FROM leavegroup WHERE groupid=#{groupId} AND leaveid=#{leaveId}</select>
+  <select id="hasActiveGroup" resultType="int">SELECT COUNT(*) FROM groups g JOIN group_member m ON g.groupid=m.groupid WHERE m.studentid=#{memberId} AND g.academicyear=#{year} AND g.semester=#{semester} AND g.status='ACTIVE'</select>
+  <select id="nextRoleId" resultType="int">SELECT RM_ROLE_SEQ.NEXTVAL FROM dual</select>
+  <select id="nextRuleId" resultType="int">SELECT RM_RULE_SEQ.NEXTVAL FROM dual</select>
+  <select id="nextLeaveId" resultType="int">SELECT RM_LEAVE_SEQ.NEXTVAL FROM dual</select>
+  <delete id="clearRuleAgreements">DELETE FROM ruleagreement WHERE groupid=#{groupId} AND ruleid=#{ruleId}</delete>
+  <delete id="clearMemberAgreements">DELETE FROM ruleagreement WHERE groupid=#{groupId} AND memberid=#{memberId}</delete>
+  <delete id="clearMemberConsents">DELETE FROM leaveconsent WHERE groupid=#{groupId} AND memberid=#{memberId}</delete>
+  <update id="reassignRoles">UPDATE role SET assigneeid=#{successorId} WHERE groupid=#{groupId} AND assigneeid=#{memberId}</update>
+</mapper>

@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <settings>
+        <setting name="localCacheScope" value="STATEMENT"/>
         <!-- DB 컬럼 snake/소문자 ↔ 자바 camelCase 자동 매핑 (studentid → studentId 는 대소문자 무시로 매핑됨) -->
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <!-- NULL 파라미터를 Oracle 에 넘길 때 타입 지정 -->
@@ -27,5 +28,6 @@
 
     <mappers>
         <mapper resource="model/mapper/MyPageMapper.xml"/>
+        <mapper resource="mybatis/group/GroupMapper.xml"/>
     </mappers>
 </configuration>

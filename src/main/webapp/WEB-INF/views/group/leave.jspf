@@ -1,0 +1,28 @@
+<%@ page pageEncoding="UTF-8" %>
+<dialog class="group-dialog roommate-leave" id="leave-dialog" aria-labelledby="leave-dialog-title" aria-describedby="leave-warning">
+    <div class="dialog-heading"><h2 id="leave-dialog-title">룸메 퇴실 요청</h2><button type="button" class="dialog-close" data-close aria-label="닫기">×</button></div>
+    <div class="roommate-leave-warning" id="leave-warning"><img src="${pageContext.request.contextPath}/assets/image/modal/alert.svg" alt="" width="16" height="16"><p>나를 제외한 룸메이트 전원이 동의해야 진행됩니다.</p></div>
+    <div class="roommate-leave-group"><span aria-hidden="true"></span><div><strong><c:out value="${groupPage.title}" default="우리 그룹"/></strong><p>${groupPage.group.academicYear}년 ${groupPage.group.semester}학기 · 구성원 ${groupPage.members.size()}명</p></div></div>
+    <form method="post" action="${pageContext.request.contextPath}/app/group/leave">
+        <%@ include file="fields.jspf" %>
+        <label for="leave-reason">퇴실 사유 (선택)</label>
+        <textarea id="leave-reason" name="reason" maxlength="300" rows="4" placeholder="사유를 입력해 주세요." autofocus></textarea>
+        <p class="field-count"><span id="reason-count">0</span> / 300</p>
+        <div class="dialog-actions"><button type="button" class="button button-outline" id="close-leave" data-close>취소</button><button class="button button-danger">퇴실 요청 보내기</button></div>
+    </form>
+</dialog>
+<c:forEach items="${groupPage.leaveRequests}" var="leave">
+    <c:if test="${groupPage.answerableLeaves.contains(leave.leaveId)}">
+        <dialog class="group-dialog" id="consent-${leave.leaveId}" aria-labelledby="consent-${leave.leaveId}-title">
+            <div class="dialog-heading"><h2 id="consent-${leave.leaveId}-title">퇴실 요청 확인</h2><button type="button" class="dialog-close" data-close aria-label="닫기">×</button></div>
+            <p><strong><c:out value="${groupPage.memberNames[leave.requesterId]}"/></strong> 님이 퇴실을 요청했어요.</p>
+            <p class="leave-reason"><c:out value="${empty leave.reason ? '작성한 사유가 없습니다.' : leave.reason}"/></p>
+            <p class="backend-muted">한 명이라도 거절하면 요청이 종료됩니다. 제출한 응답은 변경할 수 없습니다.</p>
+            <form method="post" action="${pageContext.request.contextPath}/app/group/leave/consent">
+                <%@ include file="fields.jspf" %><input type="hidden" name="leaveId" value="${leave.leaveId}">
+                <div class="dialog-actions"><button class="button button-outline" name="agreed" value="N">거절</button><button class="button" name="agreed" value="Y">동의</button></div>
+                <button type="button" class="text-button dialog-later" data-close>나중에 결정하기</button>
+            </form>
+        </dialog>
+    </c:if>
+</c:forEach>
